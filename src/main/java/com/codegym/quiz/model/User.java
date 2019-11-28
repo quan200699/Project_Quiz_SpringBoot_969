@@ -3,6 +3,7 @@ package com.codegym.quiz.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -21,6 +22,18 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String password;
+
+    private String firstName;
+
+    private String lastName;
+
+    @Email
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    private String phoneNumber;
+
+    private String gender;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
