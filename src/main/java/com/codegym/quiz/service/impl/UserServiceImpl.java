@@ -1,6 +1,7 @@
 package com.codegym.quiz.service.impl;
 
 import com.codegym.quiz.model.User;
+import com.codegym.quiz.model.UserPrinciple;
 import com.codegym.quiz.repository.UserRepository;
 import com.codegym.quiz.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,7 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException(username);
         }
         if (this.checkLogin(user)) {
-//            return UserPrinciple.build(user);
-            return null;
+            return UserPrinciple.build(user);
         }
         boolean enable = false;
         boolean accountNonExpired = false;
@@ -73,14 +73,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id);
     }
 
-//    @Override
-//    public UserDetails loadUserById(Long id) {
-//        Optional<User> user = userRepository.findById(id);
-//        if (!user.isPresent()) {
-//            throw new NullPointerException();
-//        }
-//        return UserPrinciple.build(user.get());
-//    }
+    @Override
+    public UserDetails loadUserById(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        if (!user.isPresent()) {
+            throw new NullPointerException();
+        }
+        return UserPrinciple.build(user.get());
+    }
 
     @Override
     public boolean checkLogin(User user) {
