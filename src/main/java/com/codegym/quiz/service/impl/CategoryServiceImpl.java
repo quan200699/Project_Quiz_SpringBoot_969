@@ -4,9 +4,11 @@ import com.codegym.quiz.model.Category;
 import com.codegym.quiz.repository.CategoryRepository;
 import com.codegym.quiz.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
@@ -24,12 +26,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void save(Category model) {
         categoryRepository.save(model);
-
     }
 
     @Override
     public void remove(Long id) {
         categoryRepository.deleteById(id);
-
     }
 }
