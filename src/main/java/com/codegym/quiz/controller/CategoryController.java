@@ -15,6 +15,12 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @GetMapping("/categories")
+    public ResponseEntity<Iterable<Category>> listCategory() {
+        Iterable<Category> categories = categoryService.findAll();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
+    }
+
     @PostMapping("/categories")
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         categoryService.save(category);
