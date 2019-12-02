@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @CrossOrigin("*")
 public class CategoryController {
@@ -17,5 +19,15 @@ public class CategoryController {
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         categoryService.save(category);
         return new ResponseEntity<>(category, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/categories/{id}")
+    public ResponseEntity<Category> deleteCategory(@PathVariable Long id) {
+        Optional<Category> category = categoryService.findById(id);
+        if (category.isPresent()) {
+            categoryService.remove(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
