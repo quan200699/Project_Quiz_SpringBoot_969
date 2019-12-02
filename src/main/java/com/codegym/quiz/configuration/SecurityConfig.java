@@ -73,8 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/",
                         LOGIN,
                         "/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/users/**").
-                access("hasRole('ROLE_USER')")
+                .antMatchers("list-category", "create-category").access("hasRole('ROLE_USER')")
                 .anyRequest().authenticated()
                 .and().csrf()
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));

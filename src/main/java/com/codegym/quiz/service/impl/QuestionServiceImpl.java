@@ -4,12 +4,15 @@ import com.codegym.quiz.model.Question;
 import com.codegym.quiz.repository.QuestionRepository;
 import com.codegym.quiz.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private QuestionRepository questionRepository;
+
     @Override
     public Iterable<Question> findAll() {
         return questionRepository.findAll();
