@@ -1,6 +1,8 @@
-package com.codegym.quiz.configuration;
+package com.codegym.quiz.configuration.security;
 
-import com.codegym.quiz.filter.JwtAuthenticationFilter;
+import com.codegym.quiz.configuration.customConfig.CustomAccessDeniedHandler;
+import com.codegym.quiz.configuration.customConfig.RestAuthenticationEntryPoint;
+import com.codegym.quiz.configuration.filter.JwtAuthenticationFilter;
 import com.codegym.quiz.service.UserService;
 import com.codegym.quiz.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.codegym.quiz.filter;
+package com.codegym.quiz.configuration.filter;
 
 import com.codegym.quiz.service.UserService;
 import com.codegym.quiz.service.impl.JwtService;

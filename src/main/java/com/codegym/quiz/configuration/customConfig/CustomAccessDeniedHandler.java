@@ -1,4 +1,4 @@
-package com.codegym.quiz.configuration;
+package com.codegym.quiz.configuration.customConfig;
 
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;

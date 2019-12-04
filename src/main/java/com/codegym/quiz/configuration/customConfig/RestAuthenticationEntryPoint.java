@@ -1,4 +1,4 @@
-package com.codegym.quiz.configuration;
+package com.codegym.quiz.configuration.customConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
