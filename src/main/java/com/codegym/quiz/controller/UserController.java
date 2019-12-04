@@ -3,8 +3,11 @@ package com.codegym.quiz.controller;
 import com.codegym.quiz.model.JwtResponse;
 import com.codegym.quiz.model.Role;
 import com.codegym.quiz.model.User;
+import com.codegym.quiz.model.VerificationToken;
 import com.codegym.quiz.service.RoleService;
 import com.codegym.quiz.service.UserService;
+import com.codegym.quiz.service.VerificationTokenService;
+import com.codegym.quiz.service.impl.EmailService;
 import com.codegym.quiz.service.impl.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +27,19 @@ import java.util.Set;
 @RestController
 @CrossOrigin("*")
 public class UserController {
-    private static final String DEFAULT_ROLE = "ROLE_USER";
+    public static final String DEFAULT_ROLE = "ROLE_USER";
+    public static final String TEXT = "To confirm your account, please click here : "
+            + "http://localhost:5000/confirm-account?token=";
+    public static final String SUBJECT = "Đăng ký thành công!";
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private VerificationTokenService verificationTokenService;
 
     @Autowired
     private JwtService jwtService;
@@ -61,7 +73,26 @@ public class UserController {
         user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.save(user);
+        VerificationToken token = new VerificationToken(user);
+        token.setExpiryDate(10);
+        verificationTokenService.save(token);
+        emailService.sendEmail(user.getEmail(), SUBJECT, TEXT + token.getToken());
         return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseEntity<Void> confirmUserAccount(@RequestParam("token") String verificationToken) {
+        VerificationToken token = verificationTokenService.findByToken(verificationToken);
+        if (token != null) {
+            boolean isExpired = token.isExpired();
+            if (!isExpired) {
+                User user = userService.findByEmail(token.getUser().getEmail());
+                user.setEnabled(true);
+                userService.save(user);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/login")

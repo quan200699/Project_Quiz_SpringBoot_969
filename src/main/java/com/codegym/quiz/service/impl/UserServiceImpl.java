@@ -88,7 +88,8 @@ public class UserServiceImpl implements UserService {
         boolean isCorrectUser = false;
         for (User currentUser : users) {
             if (currentUser.getUsername().equals(user.getUsername())
-                    && user.getPassword().equals(currentUser.getPassword())) {
+                    && user.getPassword().equals(currentUser.getPassword())&&
+                    currentUser.isEnabled()) {
                 isCorrectUser = true;
             }
         }
@@ -106,5 +107,10 @@ public class UserServiceImpl implements UserService {
             }
         }
         return isRegister;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
