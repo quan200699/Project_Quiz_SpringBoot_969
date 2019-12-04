@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Data
@@ -17,8 +16,13 @@ public class Question implements Serializable {
 
     private String quiz;
 
-    @ElementCollection
-    private List<String> answers;
+    private String answerA;
+
+    private String answerB;
+
+    private String answerC;
+
+    private String answerD;
 
     private String correctAnswer;
 }
