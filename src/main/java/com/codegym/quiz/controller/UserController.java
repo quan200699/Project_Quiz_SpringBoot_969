@@ -10,6 +10,8 @@ import com.codegym.quiz.service.VerificationTokenService;
 import com.codegym.quiz.service.impl.EmailService;
 import com.codegym.quiz.service.impl.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,12 +27,16 @@ import java.util.Optional;
 import java.util.Set;
 
 @RestController
+@PropertySource("classpath:application.properties")
 @CrossOrigin("*")
 public class UserController {
+
     public static final String DEFAULT_ROLE = "ROLE_USER";
-    public static final String TEXT = "To confirm your account, please click here : "
-            + "http://localhost:5000/confirm-account?token=";
+    public static final String TEXT = "Để xác thực tài khoản xin hãy nhấn vào đường dẫn này :" ;
     public static final String SUBJECT = "Đăng ký thành công!";
+
+    @Autowired
+    private Environment env;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -76,7 +82,7 @@ public class UserController {
         VerificationToken token = new VerificationToken(user);
         token.setExpiryDate(10);
         verificationTokenService.save(token);
-        emailService.sendEmail(user.getEmail(), SUBJECT, TEXT + token.getToken());
+        emailService.sendEmail(user.getEmail(), SUBJECT, TEXT + env.getProperty("confirmAccountLink") + token.getToken());
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
