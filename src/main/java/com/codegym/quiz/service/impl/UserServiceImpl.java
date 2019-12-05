@@ -113,4 +113,13 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    @Override
+    public boolean isCorrectConfirmPassword(User user) {
+        boolean isCorrentConfirmPassword = false;
+        if(user.getPassword().equals(user.getConfirmPassword())){
+            isCorrentConfirmPassword = true;
+        }
+        return isCorrentConfirmPassword;
+    }
 }

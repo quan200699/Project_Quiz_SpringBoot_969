@@ -73,6 +73,9 @@ public class UserController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
+        if (!userService.isCorrectConfirmPassword(user)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         Role role = roleService.findRoleByName(DEFAULT_ROLE);
         Set<Role> roles = new HashSet<>();
         roles.add(role);
