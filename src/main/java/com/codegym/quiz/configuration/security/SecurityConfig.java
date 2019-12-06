@@ -76,7 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         LOGIN,
                         "/register",
                         "/confirm-account/**",
-                        "/forgot-password").permitAll()
+                        "/forgot-password",
+                        "/new-password/**",
+                        "/users/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/categories").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.POST, "/categories").access("hasRole('ROLE_USER')")
                 .anyRequest().authenticated()
