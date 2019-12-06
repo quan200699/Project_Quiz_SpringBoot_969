@@ -26,15 +26,12 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import static com.codegym.quiz.model.StaticVariable.*;
+
 @RestController
 @PropertySource("classpath:application.properties")
 @CrossOrigin("*")
 public class UserController {
-
-    public static final String DEFAULT_ROLE = "ROLE_USER";
-    public static final String TEXT = "Để xác thực tài khoản xin hãy nhấn vào đường dẫn này :" ;
-    public static final String SUBJECT = "Đăng ký thành công!";
-
     @Autowired
     private Environment env;
 
@@ -85,7 +82,7 @@ public class UserController {
         VerificationToken token = new VerificationToken(user);
         token.setExpiryDate(10);
         verificationTokenService.save(token);
-        emailService.sendEmail(user.getEmail(), SUBJECT, TEXT + env.getProperty("confirmAccountLink") + token.getToken());
+        emailService.sendEmail(user.getEmail(), SUBJECT_REGISTER, TEXT_REGISTER + env.getProperty("confirmAccountLink") + token.getToken());
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 

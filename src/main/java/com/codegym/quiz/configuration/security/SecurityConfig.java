@@ -21,12 +21,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import static com.codegym.quiz.model.StaticVariable.LOGIN;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    public static final String LOGIN = "/login";
-
     @Bean
     public UserService userService() {
         return new UserServiceImpl();
