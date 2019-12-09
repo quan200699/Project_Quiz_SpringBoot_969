@@ -14,15 +14,21 @@ public class Question implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String quiz;
 
+    @Column(nullable = false)
     private String answerA;
 
+    @Column(nullable = false)
     private String answerB;
 
+    @Column(nullable = false)
     private String answerC;
 
+    @Column(nullable = false)
     private String answerD;
 
+    @Column(nullable = false)
     private String correctAnswer;
 }

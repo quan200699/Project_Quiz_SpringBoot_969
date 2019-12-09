@@ -5,7 +5,10 @@ import com.codegym.quiz.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @CrossOrigin("*")
@@ -20,7 +23,10 @@ public class QuestionController {
     }
 
     @PostMapping("/questions")
-    public ResponseEntity<Question> createQuestion(@RequestBody Question question) {
+    public ResponseEntity<Question> createQuestion(@Valid @RequestBody Question question, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         questionService.save(question);
         return new ResponseEntity<>(question, HttpStatus.CREATED);
     }
