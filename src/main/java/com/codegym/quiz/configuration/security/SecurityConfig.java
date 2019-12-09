@@ -31,7 +31,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new UserServiceImpl();
     }
 
-
     @Autowired
     private UserService userService;
 
