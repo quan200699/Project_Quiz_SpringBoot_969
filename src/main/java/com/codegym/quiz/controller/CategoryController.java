@@ -5,8 +5,10 @@ import com.codegym.quiz.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -20,8 +22,12 @@ public class CategoryController {
         Iterable<Category> categories = categoryService.findAll();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
+
     @PostMapping("/categories")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         categoryService.save(category);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
