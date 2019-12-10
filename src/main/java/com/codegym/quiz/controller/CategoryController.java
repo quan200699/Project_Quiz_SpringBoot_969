@@ -32,6 +32,19 @@ public class CategoryController {
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
+    @PutMapping("/categories/{id}")
+    public ResponseEntity<Category> updateCategory(@Valid @RequestBody Category category, @PathVariable Long id, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Optional<Category> categoryOptional = categoryService.findById(id);
+        if (!categoryOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        categoryService.save(category);
+        return new ResponseEntity<>(category, HttpStatus.OK);
+    }
+
     @DeleteMapping("/categories/{id}")
     public ResponseEntity<Category> deleteCategory(@PathVariable Long id) {
         Optional<Category> category = categoryService.findById(id);
