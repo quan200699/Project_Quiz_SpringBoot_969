@@ -23,6 +23,12 @@ public class CategoryController {
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<Category> categoryDetail(@PathVariable Long id) {
+        Optional<Category> categoryOptional = categoryService.findById(id);
+        return categoryOptional.map(category -> new ResponseEntity<>(category, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @PostMapping("/categories")
     public ResponseEntity<Category> createCategory(@Valid @RequestBody Category category, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
