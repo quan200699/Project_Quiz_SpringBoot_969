@@ -31,4 +31,7 @@ public class Question implements Serializable {
 
     @Column(nullable = false)
     private String correctAnswer;
+
+    @ManyToOne
+    private TypeOfQuestion typeOfQuestion;
 }
