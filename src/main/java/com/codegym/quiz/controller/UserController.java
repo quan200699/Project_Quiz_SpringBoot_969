@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -77,6 +78,13 @@ public class UserController {
         }
         if (!userService.isCorrectConfirmPassword(user)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        List<Role> roleList = (List<Role>) roleService.findAll();
+        if (roleList.isEmpty()) {
+            Role role = new Role();
+            role.setId(1L);
+            role.setName(DEFAULT_ROLE);
+            roleService.save(role);
         }
         Role role = roleService.findRoleByName(DEFAULT_ROLE);
         Set<Role> roles = new HashSet<>();
