@@ -1,8 +1,8 @@
 package com.codegym.quiz.controller;
 
+import com.codegym.quiz.model.Category;
 import com.codegym.quiz.model.Question;
 import com.codegym.quiz.service.QuestionService;
-import com.google.api.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,14 @@ public class QuestionController {
     private QuestionService questionService;
 
     @GetMapping("/questions")
-    public ResponseEntity<Iterable<Question>> showQuestionList() {
-        Iterable<Question> questions = questionService.findAll();
+    public ResponseEntity<Iterable<Question>> showQuestionList(Category category) {
+        Iterable<Question> questions;
+        if (category != null) {
+            questions = questionService.findAllByCategory(category);
+        }
+        else{
+            questions = questionService.findAll();
+        }
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
@@ -32,19 +38,21 @@ public class QuestionController {
         questionService.save(question);
         return new ResponseEntity<>(question, HttpStatus.CREATED);
     }
+
     @GetMapping("/questions/{id}")
-    public ResponseEntity<Question> questionDetail(@PathVariable Long id){
+    public ResponseEntity<Question> questionDetail(@PathVariable Long id) {
         Optional<Question> questionOptional = questionService.findById(id);
         return questionOptional.map(question -> new ResponseEntity<>(question, HttpStatus.OK))
-                .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
 
     }
+
     @PutMapping("/questions/{id}")
-    public ResponseEntity<Question> updateQuestion(@Valid @RequestBody Question question,@PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<Question> updateQuestion(@Valid @RequestBody Question question, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-       Optional<Question> questionOptional = questionService.findById(id);
+        Optional<Question> questionOptional = questionService.findById(id);
         if (!questionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -52,13 +60,14 @@ public class QuestionController {
         questionService.save(question);
         return new ResponseEntity<>(question, HttpStatus.OK);
     }
+
     @DeleteMapping("/questions/{id}")
     public ResponseEntity<Question> deleteQuestion(@PathVariable Long id) {
         Optional<Question> question = questionService.findById(id);
-        if (question.isPresent()){
+        if (question.isPresent()) {
             questionService.remove(id);
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

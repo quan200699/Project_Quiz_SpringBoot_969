@@ -1,5 +1,6 @@
 package com.codegym.quiz.service.impl;
 
+import com.codegym.quiz.model.Category;
 import com.codegym.quiz.model.Question;
 import com.codegym.quiz.repository.QuestionRepository;
 import com.codegym.quiz.service.QuestionService;
@@ -31,5 +32,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void remove(Long id) {
         questionRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Question> findAllByCategory(Category category) {
+        return questionRepository.findAllByCategory(category);
     }
 }
