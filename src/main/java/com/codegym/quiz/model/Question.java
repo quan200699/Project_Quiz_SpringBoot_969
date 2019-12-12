@@ -34,4 +34,7 @@ public class Question implements Serializable {
 
     @ManyToOne
     private TypeOfQuestion typeOfQuestion;
+
+    @ManyToOne
+    private Category category;
 }

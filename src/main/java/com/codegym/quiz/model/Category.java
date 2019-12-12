@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Data
@@ -16,4 +17,7 @@ public class Category implements Serializable {
 
     @Column(nullable = false)
     private String name;
+
+    @OneToMany(targetEntity =  Question.class)
+    private Set<Question> questions;
 }
