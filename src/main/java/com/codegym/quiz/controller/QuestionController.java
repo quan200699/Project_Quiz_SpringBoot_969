@@ -33,7 +33,7 @@ public class QuestionController {
         return new ResponseEntity<>(question, HttpStatus.CREATED);
     }
     @GetMapping("/questions/{id}")
-    public ResponseEntity<Question> questionDaital(@PathVariable Long id){
+    public ResponseEntity<Question> questionDetail(@PathVariable Long id){
         Optional<Question> questionOptional = questionService.findById(id);
         return questionOptional.map(question -> new ResponseEntity<>(question, HttpStatus.OK))
                 .orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));

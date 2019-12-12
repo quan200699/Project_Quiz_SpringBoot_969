@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaRepositories("com.codegym.quiz")
+@EnableJpaRepositories("com.codegym.quiz.repository")
 @EntityScan("com.codegym.quiz")
 public class QuizApplication {
 
