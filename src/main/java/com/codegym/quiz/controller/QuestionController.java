@@ -21,7 +21,7 @@ public class QuestionController {
     @GetMapping("/questions")
     public ResponseEntity<Iterable<Question>> showQuestionList(Category category) {
         Iterable<Question> questions;
-        if (category != null) {
+        if (category.getId() != null) {
             questions = questionService.findAllByCategory(category);
         }
         else{
