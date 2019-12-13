@@ -32,4 +32,14 @@ public class AnswerController {
         answerService.save(answer);
         return new ResponseEntity<>(answer, HttpStatus.OK);
     }
+
+    @PutMapping("/answers/{id}")
+    public ResponseEntity<Answer> updateAnswer(@RequestBody Answer answer, @PathVariable Long id) {
+        Optional<Answer> answerOptional = answerService.findById(id);
+        if (!answerOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        answerService.save(answer);
+        return new ResponseEntity<>(answer, HttpStatus.OK);
+    }
 }
