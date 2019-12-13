@@ -42,4 +42,14 @@ public class AnswerController {
         answerService.save(answer);
         return new ResponseEntity<>(answer, HttpStatus.OK);
     }
+
+    @DeleteMapping("/answers/{id}")
+    public ResponseEntity<Answer> deleteAnswer(@PathVariable Long id) {
+        Optional<Answer> answerOptional = answerService.findById(id);
+        if (!answerOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        answerService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
