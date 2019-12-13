@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,17 +18,8 @@ public class Question implements Serializable {
     @Column(nullable = false)
     private String quiz;
 
-    @Column(nullable = false)
-    private String answerA;
-
-    @Column(nullable = false)
-    private String answerB;
-
-    @Column(nullable = false)
-    private String answerC;
-
-    @Column(nullable = false)
-    private String answerD;
+    @OneToMany
+    private Set<Answer> answers;
 
     @Column(nullable = false)
     private String correctAnswer;

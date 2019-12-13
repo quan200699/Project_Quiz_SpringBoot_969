@@ -13,4 +13,7 @@ public class Answer {
 
     @Column(nullable = false)
     private String content;
+
+    @ManyToOne
+    private Question question;
 }
