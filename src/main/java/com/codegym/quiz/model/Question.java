@@ -15,13 +15,11 @@ public class Question implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String quiz;
 
     @OneToMany
     private Set<Answer> answers;
 
-    @Column(nullable = false)
     private String correctAnswer;
 
     @ManyToOne

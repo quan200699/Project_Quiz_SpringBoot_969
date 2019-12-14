@@ -31,10 +31,7 @@ public class QuestionController {
     }
 
     @PostMapping("/questions")
-    public ResponseEntity<Question> createQuestion(@Valid @RequestBody Question question, BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Question> createQuestion(@RequestBody Question question) {
         questionService.save(question);
         return new ResponseEntity<>(question, HttpStatus.CREATED);
     }
@@ -48,10 +45,7 @@ public class QuestionController {
     }
 
     @PutMapping("/questions/{id}")
-    public ResponseEntity<Question> updateQuestion(@Valid @RequestBody Question question, @PathVariable Long id, BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Question> updateQuestion(@RequestBody Question question, @PathVariable Long id) {
         Optional<Question> questionOptional = questionService.findById(id);
         if (!questionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
