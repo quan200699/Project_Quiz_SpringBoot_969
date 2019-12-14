@@ -82,12 +82,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/categories",
                         "typeOfQuestions",
                         "questions",
-                        "answers").access("hasRole(ROLE_USER)")
+                        "answers").access("hasRole('ROLE_USER')")
                 .antMatchers(HttpMethod.POST,
                         "/categories",
                         "/typeOfQuestions",
                         "/questions",
-                        "/answers").access("hasRole(ROLE_USER)")
+                        "/answers").access("hasRole('ROLE_USER')")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
