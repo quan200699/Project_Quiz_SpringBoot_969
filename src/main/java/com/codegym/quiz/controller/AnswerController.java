@@ -1,7 +1,9 @@
 package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.Answer;
+import com.codegym.quiz.model.Question;
 import com.codegym.quiz.service.AnswerService;
+import com.codegym.quiz.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +17,24 @@ public class AnswerController {
     @Autowired
     private AnswerService answerService;
 
-    @GetMapping("/answers")
-    public ResponseEntity<Iterable<Answer>> showAll() {
-        Iterable<Answer> answers = answerService.findAll();
+    @Autowired
+    private QuestionService questionService;
+
+    @GetMapping("/answers/{questionId}")
+    public ResponseEntity<Iterable<Answer>> showAllByQuestion(@PathVariable Long questionId) {
+        Optional<Question> questionOptional = questionService.findById(questionId);
+        if(!questionOptional.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Answer> answers = answerService.findAllByQuestion(questionOptional.get());
         return new ResponseEntity<>(answers, HttpStatus.OK);
     }
 
-    @GetMapping("/answers/{id}")
-    public ResponseEntity<Answer> getAnswerDetail(@PathVariable Long id) {
-        Optional<Answer> answer = answerService.findById(id);
-        return answer.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+//    @GetMapping("/answers/{id}")
+//    public ResponseEntity<Answer> getAnswerDetail(@PathVariable Long id) {
+//        Optional<Answer> answer = answerService.findById(id);
+//        return answer.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//    }
 
     @PostMapping("/answers")
     public ResponseEntity<Answer> createAnswer(@RequestBody Answer answer) {

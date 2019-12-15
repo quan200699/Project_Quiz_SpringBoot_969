@@ -6,10 +6,8 @@ import com.codegym.quiz.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -31,10 +29,7 @@ public class QuestionController {
     }
 
     @PostMapping("/questions")
-    public ResponseEntity<Question> createQuestion(@Valid @RequestBody Question question, BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Question> createQuestion(@RequestBody Question question) {
         questionService.save(question);
         return new ResponseEntity<>(question, HttpStatus.CREATED);
     }
@@ -48,10 +43,7 @@ public class QuestionController {
     }
 
     @PutMapping("/questions/{id}")
-    public ResponseEntity<Question> updateQuestion(@Valid @RequestBody Question question, @PathVariable Long id, BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Question> updateQuestion(@RequestBody Question question, @PathVariable Long id) {
         Optional<Question> questionOptional = questionService.findById(id);
         if (!questionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
