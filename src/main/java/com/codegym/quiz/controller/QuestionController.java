@@ -21,10 +21,15 @@ public class QuestionController {
         Iterable<Question> questions;
         if (category.getId() != null) {
             questions = questionService.findAllByCategory(category);
-        }
-        else{
+        } else {
             questions = questionService.findAll();
         }
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+
+    @GetMapping("/questionStatusIsTrue")
+    public ResponseEntity<Iterable<Question>> showQuestionStatusIsTrue() {
+        Iterable<Question> questions = questionService.findAllByStatusIsTrue();
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 

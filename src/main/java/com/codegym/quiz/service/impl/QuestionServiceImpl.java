@@ -38,4 +38,9 @@ public class QuestionServiceImpl implements QuestionService {
     public Iterable<Question> findAllByCategory(Category category) {
         return questionRepository.findAllByCategory(category);
     }
+
+    @Override
+    public Iterable<Question> findAllByStatusIsTrue() {
+        return questionRepository.findAllByStatusIsTrue();
+    }
 }
