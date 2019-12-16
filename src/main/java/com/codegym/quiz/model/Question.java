@@ -19,9 +19,6 @@ public class Question implements Serializable {
 
     private boolean status;
 
-    @OneToMany
-    private Set<Answer> answers;
-
     private String correctAnswer;
 
     @ManyToOne
