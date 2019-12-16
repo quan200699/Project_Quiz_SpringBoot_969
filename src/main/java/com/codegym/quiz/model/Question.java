@@ -17,8 +17,7 @@ public class Question implements Serializable {
     @Column(unique = true)
     private String quiz;
 
-    @OneToMany
-    private Set<Answer> answers;
+    private boolean status;
 
     private String correctAnswer;
 
