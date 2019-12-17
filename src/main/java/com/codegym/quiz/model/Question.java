@@ -26,4 +26,7 @@ public class Question implements Serializable {
 
     @ManyToOne
     private Category category;
+
+    @ManyToOne
+    private Quiz quiz;
 }
