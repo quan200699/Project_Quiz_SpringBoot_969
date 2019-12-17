@@ -15,7 +15,7 @@ public class Question implements Serializable {
     private Long id;
 
     @Column(unique = true)
-    private String quiz;
+    private String content;
 
     private boolean status;
 
