@@ -15,7 +15,7 @@ public class Question implements Serializable {
     private Long id;
 
     @Column(unique = true)
-    private String quiz;
+    private String content;
 
     private boolean status;
 
@@ -26,4 +26,7 @@ public class Question implements Serializable {
 
     @ManyToOne
     private Category category;
+
+    @ManyToOne
+    private Quiz quiz;
 }
