@@ -27,6 +27,9 @@ public class Question implements Serializable {
     @ManyToOne
     private Category category;
 
+    @OneToMany(targetEntity = Answer.class, fetch = FetchType.EAGER)
+    private Set<Answer> answers;
+
     @ManyToOne
     private Quiz quiz;
 }
