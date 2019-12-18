@@ -10,6 +10,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Iterable<Question> findAllByStatusIsTrue();
 
-    Question findQuestionByTypeOfQuestion(TypeOfQuestion typeOfQuestion);
 
 }
