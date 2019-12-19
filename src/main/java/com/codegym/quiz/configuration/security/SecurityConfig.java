@@ -80,14 +80,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/users/**").permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/categories",
-                        "typeOfQuestions",
-                        "questions",
-                        "answers").access("hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.POST,
-                        "/categories",
                         "/typeOfQuestions",
                         "/questions",
-                        "/answers").access("hasRole('ROLE_USER')")
+                        "/answers/**",
+                        "/quizzes").access("hasRole('ROLE_USER')")
+                .antMatchers("/categories",
+                        "/typeOfQuestions",
+                        "/questions",
+                        "/answers",
+                        "quizzes").access("hasRole('ROLE_USER')")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));

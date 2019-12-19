@@ -23,18 +23,18 @@ public class AnswerController {
     @GetMapping("/answers/{questionId}")
     public ResponseEntity<Iterable<Answer>> showAllByQuestion(@PathVariable Long questionId) {
         Optional<Question> questionOptional = questionService.findById(questionId);
-        if(!questionOptional.isPresent()){
+        if (!questionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Iterable<Answer> answers = answerService.findAllByQuestion(questionOptional.get());
         return new ResponseEntity<>(answers, HttpStatus.OK);
     }
 
-//    @GetMapping("/answers/{id}")
-//    public ResponseEntity<Answer> getAnswerDetail(@PathVariable Long id) {
-//        Optional<Answer> answer = answerService.findById(id);
-//        return answer.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//    }
+    @GetMapping("/getAnswer/{id}")
+    public ResponseEntity<Answer> getAnswerDetail(@PathVariable Long id) {
+        Optional<Answer> answer = answerService.findById(id);
+        return answer.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
     @PostMapping("/answers")
     public ResponseEntity<Answer> createAnswer(@RequestBody Answer answer) {
