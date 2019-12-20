@@ -27,19 +27,13 @@ public class QuizController {
         return quizOptional.map(quiz -> new ResponseEntity<>(quiz,HttpStatus.OK)).
                 orElseGet(()-> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @PostMapping("quizzes")
-    public ResponseEntity<Quiz> createQuiz(@Valid @RequestBody Quiz quiz, BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping("/quizzes")
+    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
         quizService.save(quiz);
         return new ResponseEntity<>(quiz,HttpStatus.OK);
     }
     @PutMapping("/quizzes/{id}")
-    public ResponseEntity<Quiz> updateQuiz(@Valid @RequestBody Quiz quiz,@PathVariable Long id,BindingResult bindingResult) {
-        if (bindingResult.hasFieldErrors()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Quiz> updateQuiz(@RequestBody Quiz quiz,@PathVariable Long id) {
         Optional<Quiz> quizOptional = quizService.findById(id);
         if (!quizOptional.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
