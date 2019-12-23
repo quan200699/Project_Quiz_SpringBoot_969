@@ -4,9 +4,11 @@ import com.codegym.quiz.model.CorrectAnswer;
 import com.codegym.quiz.repository.CorrectAnswerRepository;
 import com.codegym.quiz.service.CorrectAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class CorrectAnswerServiceImpl implements CorrectAnswerService {
     @Autowired
     private CorrectAnswerRepository correctAnswerRepository;
