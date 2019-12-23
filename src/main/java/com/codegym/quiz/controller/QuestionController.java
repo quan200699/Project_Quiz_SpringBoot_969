@@ -3,13 +3,16 @@ package com.codegym.quiz.controller;
 import com.codegym.quiz.model.Answer;
 import com.codegym.quiz.model.Category;
 import com.codegym.quiz.model.Question;
+import com.codegym.quiz.model.TypeOfQuestion;
 import com.codegym.quiz.service.AnswerService;
 import com.codegym.quiz.service.QuestionService;
+import com.codegym.quiz.service.TypeOfQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,6 +23,9 @@ public class QuestionController {
 
     @Autowired
     private AnswerService answerService;
+
+    @Autowired
+    private TypeOfQuestionService typeOfQuestionService;
 
     @GetMapping("/questions")
     public ResponseEntity<Iterable<Question>> showQuestionList(Category category) {
@@ -34,6 +40,17 @@ public class QuestionController {
 
     @GetMapping("/questionStatusIsTrue")
     public ResponseEntity<Iterable<Question>> showQuestionStatusIsTrue() {
+        List<TypeOfQuestion> typeOfQuestions = (List<TypeOfQuestion>) typeOfQuestionService.findAll();
+        if (typeOfQuestions.isEmpty()) {
+            TypeOfQuestion typeOfQuestion = new TypeOfQuestion();
+            typeOfQuestion.setId(1L);
+            typeOfQuestion.setName("Chọn đáp án chính xác nhất");
+            typeOfQuestionService.save(typeOfQuestion);
+            typeOfQuestion = new TypeOfQuestion();
+            typeOfQuestion.setId(2L);
+            typeOfQuestion.setName("Chọn nhiều đáp án");
+            typeOfQuestionService.save(typeOfQuestion);
+        }
         Iterable<Question> questions = questionService.findAllByStatusIsTrue();
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
@@ -49,7 +66,6 @@ public class QuestionController {
         Optional<Question> questionOptional = questionService.findById(id);
         return questionOptional.map(question -> new ResponseEntity<>(question, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-
     }
 
     @PutMapping("/questions/{id}")
