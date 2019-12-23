@@ -1,6 +1,7 @@
 package com.codegym.quiz.service.impl;
 
 import com.codegym.quiz.model.CorrectAnswer;
+import com.codegym.quiz.model.Question;
 import com.codegym.quiz.repository.CorrectAnswerRepository;
 import com.codegym.quiz.service.CorrectAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,10 @@ public class CorrectAnswerServiceImpl implements CorrectAnswerService {
     @Override
     public void remove(Long id) {
         correctAnswerRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<CorrectAnswer> findAllByQuestion(Question question) {
+        return correctAnswerRepository.findAllByQuestion(question);
     }
 }
