@@ -19,7 +19,8 @@ public class Question implements Serializable {
 
     private boolean status;
 
-    private String correctAnswer;
+    @OneToMany(targetEntity = CorrectAnswer.class, fetch = FetchType.EAGER)
+    private Set<CorrectAnswer> correctAnswers;
 
     @ManyToOne
     private TypeOfQuestion typeOfQuestion;
