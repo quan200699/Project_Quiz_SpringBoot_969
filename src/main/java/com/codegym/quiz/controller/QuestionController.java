@@ -37,7 +37,12 @@ public class QuestionController {
 
     @GetMapping("/findAllQuestionByQuiz")
     public ResponseEntity<Iterable<Question>> findAllByQuiz(Quiz quiz) {
-        Iterable<Question> questions = questionService.findAllByQuiz(quiz);
+        Iterable<Question> questions;
+        if (quiz == null) {
+            questions = questionService.findAllByQuizIsNull();
+        } else {
+            questions = questionService.findAllByQuiz(quiz);
+        }
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 

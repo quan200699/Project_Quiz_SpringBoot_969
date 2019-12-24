@@ -10,4 +10,6 @@ public interface QuestionService extends GeneralService<Question> {
     Iterable<Question> findAllByStatusIsTrue();
 
     Iterable<Question> findAllByQuiz(Quiz quiz);
+
+    Iterable<Question> findAllByQuizIsNull();
 }
