@@ -41,13 +41,17 @@ public class QuestionController {
 
     @GetMapping("/findAllQuestionByQuiz/{id}")
     public ResponseEntity<Iterable<Question>> findAllByQuiz(@PathVariable Long id) {
-        Iterable<Question> questions;
         Optional<Quiz> quizOptional = quizService.findById(id);
-        if (quizOptional.get().getId() == null) {
-            questions = questionService.findAllByQuizIsNull();
-        } else {
-            questions = questionService.findAllByQuiz(quizOptional.get());
+        if (!quizOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        Iterable<Question> questions = questionService.findAllByQuiz(quizOptional.get());
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+
+    @GetMapping("/findAllQuestionByQuizNull")
+    public ResponseEntity<Iterable<Question>> findAllByQuizNull() {
+        Iterable<Question> questions = questionService.findAllByQuizIsNull();
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
