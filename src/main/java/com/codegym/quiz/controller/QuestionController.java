@@ -1,9 +1,6 @@
 package com.codegym.quiz.controller;
 
-import com.codegym.quiz.model.Answer;
-import com.codegym.quiz.model.Category;
-import com.codegym.quiz.model.Question;
-import com.codegym.quiz.model.TypeOfQuestion;
+import com.codegym.quiz.model.*;
 import com.codegym.quiz.service.AnswerService;
 import com.codegym.quiz.service.QuestionService;
 import com.codegym.quiz.service.TypeOfQuestionService;
@@ -35,6 +32,12 @@ public class QuestionController {
         } else {
             questions = questionService.findAll();
         }
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+
+    @GetMapping("/findAllQuestionByQuiz")
+    public ResponseEntity<Iterable<Question>> findAllByQuiz(Quiz quiz) {
+        Iterable<Question> questions = questionService.findAllByQuiz(quiz);
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
