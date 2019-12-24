@@ -3,6 +3,7 @@ package com.codegym.quiz.controller;
 import com.codegym.quiz.model.*;
 import com.codegym.quiz.service.AnswerService;
 import com.codegym.quiz.service.QuestionService;
+import com.codegym.quiz.service.QuizService;
 import com.codegym.quiz.service.TypeOfQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,9 @@ public class QuestionController {
     private AnswerService answerService;
 
     @Autowired
+    private QuizService quizService;
+
+    @Autowired
     private TypeOfQuestionService typeOfQuestionService;
 
     @GetMapping("/questions")
@@ -35,13 +39,14 @@ public class QuestionController {
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
-    @GetMapping("/findAllQuestionByQuiz")
-    public ResponseEntity<Iterable<Question>> findAllByQuiz(Quiz quiz) {
+    @GetMapping("/findAllQuestionByQuiz/{id}")
+    public ResponseEntity<Iterable<Question>> findAllByQuiz(@PathVariable Long id) {
         Iterable<Question> questions;
-        if (quiz == null) {
+        Optional<Quiz> quizOptional = quizService.findById(id);
+        if (quizOptional.get().getId() == null) {
             questions = questionService.findAllByQuizIsNull();
         } else {
-            questions = questionService.findAllByQuiz(quiz);
+            questions = questionService.findAllByQuiz(quizOptional.get());
         }
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
