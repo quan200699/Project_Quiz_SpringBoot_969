@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -38,7 +40,15 @@ public class AnswerController {
 
     @PostMapping("/answers")
     public ResponseEntity<Answer> createAnswer(@RequestBody Answer answer) {
+        Optional<Question> questionOptional = questionService.findById(answer.getQuestion().getId());
+        if (!questionOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         answerService.save(answer);
+        Set<Answer> answers = new HashSet<>();
+        answers.add(answer);
+        questionOptional.get().setAnswers(answers);
+        questionService.save(questionOptional.get());
         return new ResponseEntity<>(answer, HttpStatus.OK);
     }
 
