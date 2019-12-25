@@ -90,7 +90,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/answers",
                         "/quizzes",
                         "/findAllQuestionByQuiz",
-                        "/findAllQuestionByQuizNull").access("hasRole('ROLE_USER')")
+                        "/findAllQuestionByQuizNull").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
