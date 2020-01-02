@@ -45,10 +45,10 @@ public class AnswerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         answerService.save(answer);
-        Set<Answer> answers = new HashSet<>();
-        answers.add(answer);
-        questionOptional.get().setAnswers(answers);
-        questionService.save(questionOptional.get());
+//        Set<Answer> answers = new HashSet<>();
+//        answers.add(answer);
+//        questionOptional.get().setAnswers(answers);
+//        questionService.save(questionOptional.get());
         return new ResponseEntity<>(answer, HttpStatus.OK);
     }
 
