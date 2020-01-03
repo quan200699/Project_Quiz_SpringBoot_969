@@ -1,10 +1,7 @@
 package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.*;
-import com.codegym.quiz.service.AnswerService;
-import com.codegym.quiz.service.QuestionService;
-import com.codegym.quiz.service.QuizService;
-import com.codegym.quiz.service.TypeOfQuestionService;
+import com.codegym.quiz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +24,9 @@ public class QuestionController {
 
     @Autowired
     private TypeOfQuestionService typeOfQuestionService;
+
+    @Autowired
+    private CorrectAnswerService correctAnswerService;
 
     @GetMapping("/questions")
     public ResponseEntity<Iterable<Question>> showQuestionList(Category category) {
@@ -101,8 +101,12 @@ public class QuestionController {
         Optional<Question> question = questionService.findById(id);
         if (question.isPresent()) {
             Iterable<Answer> answers = answerService.findAllByQuestion(question.get());
+            Iterable<CorrectAnswer> correctAnswers = correctAnswerService.findAllByQuestion(question.get());
             for (Answer answer : answers) {
                 answerService.remove(answer.getId());
+            }
+            for (CorrectAnswer correctAnswer : correctAnswers) {
+                correctAnswerService.remove(correctAnswer.getId());
             }
             questionService.remove(id);
             return new ResponseEntity<>(HttpStatus.OK);
