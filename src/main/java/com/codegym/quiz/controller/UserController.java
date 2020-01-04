@@ -134,6 +134,20 @@ public class UserController {
         return userOptional.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUserProfile(@PathVariable Long id, @RequestBody User user) {
+        Optional<User> userOptional = this.userService.findById(id);
+        if (!userOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        user.setId(userOptional.get().getId());
+        user.setUsername(userOptional.get().getUsername());
+        user.setPassword(userOptional.get().getPassword());
+        user.setConfirmPassword(userOptional.get().getConfirmPassword());
+        userService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/new-password/{id}", method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseEntity<User> updatePassword(@RequestParam("token") String token, @PathVariable Long id, @RequestBody User user) {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);
