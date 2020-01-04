@@ -26,20 +26,16 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String confirmPassword;
 
-    @Column(nullable = false)
     private String firstName;
 
-    @Column(nullable = false)
     private String lastName;
 
     @Email
     @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
     private String phoneNumber;
 
-    @Column(nullable = false)
     private String gender;
 
     private boolean enabled;
