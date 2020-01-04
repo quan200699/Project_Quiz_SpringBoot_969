@@ -142,7 +142,10 @@ public class UserController {
         }
         user.setId(userOptional.get().getId());
         user.setUsername(userOptional.get().getUsername());
+        user.setEmail(userOptional.get().getEmail());
+        user.setEnabled(userOptional.get().isEnabled());
         user.setPassword(userOptional.get().getPassword());
+        user.setRoles(userOptional.get().getRoles());
         user.setConfirmPassword(userOptional.get().getConfirmPassword());
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
