@@ -15,5 +15,5 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
 
     Iterable<Question> findAllByQuiz(Quiz quiz);
 
-    Iterable<Question> findAllByQuizIsNull();
+    Iterable<Question> findAllByQuizIsNullAndStatusIsTrue();
 }

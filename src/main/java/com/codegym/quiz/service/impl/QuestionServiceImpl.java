@@ -51,7 +51,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Iterable<Question> findAllByQuizIsNull() {
-        return questionRepository.findAllByQuizIsNull();
+    public Iterable<Question> findAllByQuizIsNullAndStatusIsTrue() {
+        return questionRepository.findAllByQuizIsNullAndStatusIsTrue();
     }
 }

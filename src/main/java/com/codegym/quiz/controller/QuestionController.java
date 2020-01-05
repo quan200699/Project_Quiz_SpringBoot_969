@@ -51,7 +51,7 @@ public class QuestionController {
 
     @GetMapping("/findAllQuestionByQuizNull")
     public ResponseEntity<Iterable<Question>> findAllByQuizNull() {
-        Iterable<Question> questions = questionService.findAllByQuizIsNull();
+        Iterable<Question> questions = questionService.findAllByQuizIsNullAndStatusIsTrue();
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
