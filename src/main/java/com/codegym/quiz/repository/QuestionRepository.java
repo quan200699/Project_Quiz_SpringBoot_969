@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface QuestionRepository extends JpaRepository<Question, Long> {
     Iterable<Question> findAllByCategoryAndStatusIsTrue(Category category);
 
-    Iterable<Question> findAllByTypeOfQuestionAAndStatusIsTrue(TypeOfQuestion typeOfQuestion);
+    Iterable<Question> findAllByTypeOfQuestionAndStatusIsTrue(TypeOfQuestion typeOfQuestion);
 
     Iterable<Question> findAllByStatusIsTrue();
 

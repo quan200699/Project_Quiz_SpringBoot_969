@@ -8,7 +8,7 @@ import com.codegym.quiz.model.TypeOfQuestion;
 public interface QuestionService extends GeneralService<Question> {
     Iterable<Question> findAllByCategoryAndStatusIsTrue(Category category);
 
-    Iterable<Question> findAllByTypeOfQuestionAAndStatusIsTrue(TypeOfQuestion typeOfQuestion);
+    Iterable<Question> findAllByTypeOfQuestionAndStatusIsTrue(TypeOfQuestion typeOfQuestion);
 
     Iterable<Question> findAllByStatusIsTrue();
 
