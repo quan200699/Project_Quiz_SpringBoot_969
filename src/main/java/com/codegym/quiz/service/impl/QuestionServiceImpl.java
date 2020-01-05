@@ -3,6 +3,7 @@ package com.codegym.quiz.service.impl;
 import com.codegym.quiz.model.Category;
 import com.codegym.quiz.model.Question;
 import com.codegym.quiz.model.Quiz;
+import com.codegym.quiz.model.TypeOfQuestion;
 import com.codegym.quiz.repository.QuestionRepository;
 import com.codegym.quiz.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Iterable<Question> findAllByCategory(Category category) {
-        return questionRepository.findAllByCategory(category);
+    public Iterable<Question> findAllByCategoryAndStatusIsTrue(Category category) {
+        return questionRepository.findAllByCategoryAndStatusIsTrue(category);
+    }
+
+    @Override
+    public Iterable<Question> findAllByTypeOfQuestionAAndStatusIsTrue(TypeOfQuestion typeOfQuestion) {
+        return questionRepository.findAllByTypeOfQuestionAAndStatusIsTrue(typeOfQuestion);
     }
 
     @Override

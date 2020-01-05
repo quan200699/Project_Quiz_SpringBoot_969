@@ -32,7 +32,7 @@ public class QuestionController {
     public ResponseEntity<Iterable<Question>> showQuestionList(Category category) {
         Iterable<Question> questions;
         if (category.getId() != null) {
-            questions = questionService.findAllByCategory(category);
+            questions = questionService.findAllByCategoryAndStatusIsTrue(category);
         } else {
             questions = questionService.findAll();
         }

@@ -7,9 +7,9 @@ import com.codegym.quiz.model.TypeOfQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    Iterable<Question> findAllByCategory(Category category);
+    Iterable<Question> findAllByCategoryAndStatusIsTrue(Category category);
 
-    Iterable<Question> findAllByTypeOfQuestion(TypeOfQuestion typeOfQuestion);
+    Iterable<Question> findAllByTypeOfQuestionAAndStatusIsTrue(TypeOfQuestion typeOfQuestion);
 
     Iterable<Question> findAllByStatusIsTrue();
 
