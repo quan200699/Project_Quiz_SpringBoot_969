@@ -150,5 +150,12 @@ public class QuestionController {
         return new ResponseEntity<>(questions,HttpStatus.OK);
     }
     @GetMapping("findAllByContentContaining")
+    public ResponseEntity<Iterable<Question>> findAllByContentContaining(@RequestParam("content") String content) {
+        if (content == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Question> questions = questionService.findAllByContentContainingAndStatusIsTrue(content);
+        return new ResponseEntity<>(questions,HttpStatus.OK);
+    }
 
 }
