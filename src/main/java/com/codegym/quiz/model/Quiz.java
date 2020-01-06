@@ -2,11 +2,10 @@ package com.codegym.quiz.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,4 +17,12 @@ public class Quiz implements Serializable {
     private Long id;
 
     private String name;
+
+    private LocalDate startedDate;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "quiz_participant",
+            joinColumns = {@JoinColumn(name = "quiz_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private Set<User> participants;
 }
