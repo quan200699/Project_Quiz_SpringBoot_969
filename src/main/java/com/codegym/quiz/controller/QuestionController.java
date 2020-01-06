@@ -137,6 +137,9 @@ public class QuestionController {
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
     @GetMapping("findAllByTypeOfQuestionAndCategory")
+    public ResponseEntity<Iterable<Question>> findAllByTypeOfQuestionAndCategory(@RequestParam("typeOfQuestion") String typeOfQuestion, @RequestParam("category") String category) {
+
+    }
 
 
 }
