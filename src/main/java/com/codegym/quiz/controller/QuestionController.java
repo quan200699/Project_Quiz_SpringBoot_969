@@ -138,8 +138,12 @@ public class QuestionController {
     }
     @GetMapping("findAllByTypeOfQuestionAndCategory")
     public ResponseEntity<Iterable<Question>> findAllByTypeOfQuestionAndCategory(@RequestParam("typeOfQuestion") String typeOfQuestion, @RequestParam("category") String category) {
-
+        TypeOfQuestion currentTypeOfQuestion = typeOfQuestionService.findByName(typeOfQuestion);
+        Category currentCategory = categoryService.findByName(category);
+        if (currentTypeOfQuestion == null) {
+            if (currentCategory == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
     }
-
-
 }
