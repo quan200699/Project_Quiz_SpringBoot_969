@@ -47,6 +47,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Iterable<Question> findAllByTypeOfQuestionAndCategoryAndStatusIsTrue(TypeOfQuestion typeOfQuestion, Category category) {
+        return questionRepository.findAllByTypeOfQuestionAndCategoryAndStatusIsTrue(typeOfQuestion, category);
+    }
+
+    @Override
     public Iterable<Question> findAllByStatusIsTrue() {
 
         return questionRepository.findAllByStatusIsTrue();

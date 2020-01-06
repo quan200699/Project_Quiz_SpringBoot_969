@@ -141,9 +141,12 @@ public class QuestionController {
         TypeOfQuestion currentTypeOfQuestion = typeOfQuestionService.findByName(typeOfQuestion);
         Category currentCategory = categoryService.findByName(category);
         if (currentTypeOfQuestion == null) {
-            if (currentCategory == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        if (currentCategory == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Question> questions = questionService.findAllByTypeOfQuestionAndCategoryAndStatusIsTrue(currentTypeOfQuestion,currentCategory);
+        return new ResponseEntity<>(questions,HttpStatus.OK);
     }
 }
