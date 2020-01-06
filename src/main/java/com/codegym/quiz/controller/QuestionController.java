@@ -28,6 +28,9 @@ public class QuestionController {
     @Autowired
     private CorrectAnswerService correctAnswerService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @GetMapping("/questions")
     public ResponseEntity<Iterable<Question>> showQuestionList(Category category) {
         Iterable<Question> questions;
@@ -113,14 +116,24 @@ public class QuestionController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     @GetMapping("findAllQuestionByCategory")
-    public ResponseEntity<Iterable<Question>> findAllQuestionByCategory(Category category) {
-        Iterable<Question> questions = questionService.findAllByCategoryAndStatusIsTrue(category);
+    public ResponseEntity<Iterable<Question>> findAllQuestionByCategory(@RequestParam("category") String category) {
+        Category currentCategory = categoryService.findByName(category);
+        if (currentCategory == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Question> questions = questionService.findAllByCategoryAndStatusIsTrue(currentCategory);
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
+
     @GetMapping("findAllQuestionByTypeOfQuestion")
-    public ResponseEntity<Iterable<Question>> findAllQuestionByTypeOfQuestion(TypeOfQuestion typeOfQuestion) {
-        Iterable<Question> questions = questionService.findAllByTypeOfQuestionAndStatusIsTrue(typeOfQuestion);
+    public ResponseEntity<Iterable<Question>> findAllQuestionByTypeOfQuestion(@RequestParam("typeOfQuestion") String typeOfQuestion) {
+        TypeOfQuestion currentTypeOfQuestion = typeOfQuestionService.findByName(typeOfQuestion);
+        if (currentTypeOfQuestion == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Question> questions = questionService.findAllByTypeOfQuestionAndStatusIsTrue(currentTypeOfQuestion);
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 }

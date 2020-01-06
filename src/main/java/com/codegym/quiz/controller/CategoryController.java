@@ -61,9 +61,4 @@ public class CategoryController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    @GetMapping("/findAllCategoryByName")
-    public ResponseEntity<Iterable<Category>> findAllCategoryByName(String categoryName) {
-        Iterable<Category> categories = categoryService.findAllByName(categoryName);
-        return new ResponseEntity<>(categories, HttpStatus.OK);
-    }
 }

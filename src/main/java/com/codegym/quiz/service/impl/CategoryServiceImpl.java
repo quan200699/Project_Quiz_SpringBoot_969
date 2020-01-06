@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Iterable<Category> findAllByName(String categoryName) {
-        return categoryRepository.findAllByName(categoryName);
+    public Category findByName(String categoryName) {
+        return categoryRepository.findByName(categoryName);
     }
 }

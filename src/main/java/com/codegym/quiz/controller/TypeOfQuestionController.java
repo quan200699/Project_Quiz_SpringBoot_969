@@ -29,9 +29,4 @@ public class TypeOfQuestionController {
         Optional<TypeOfQuestion> typeOfQuestionOptional = typeOfQuestionService.findById(id);
         return typeOfQuestionOptional.map(typeOfQuestion -> new ResponseEntity<>(typeOfQuestion, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-    @GetMapping("/findAllTypeOfQuestionByName")
-    public ResponseEntity<Iterable<TypeOfQuestion>> findAllTypeOfQuestionByName(String typeOfQuestionName) {
-        Iterable<TypeOfQuestion> typeOfQuestions = typeOfQuestionService.findAllByName(typeOfQuestionName);
-        return new ResponseEntity<>(typeOfQuestions, HttpStatus.OK);
-    }
 }

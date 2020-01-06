@@ -34,7 +34,7 @@ public class TypeOfQuestionServiceImpl implements TypeOfQuestionService {
     }
 
     @Override
-    public Iterable<TypeOfQuestion> findAllByName(String typeOfQuestionName) {
-        return typeOfQuestionRepository.findAllByName(typeOfQuestionName);
+    public TypeOfQuestion findByName(String typeOfQuestionName) {
+        return typeOfQuestionRepository.findByName(typeOfQuestionName);
     }
 }

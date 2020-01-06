@@ -4,5 +4,5 @@ import com.codegym.quiz.model.TypeOfQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TypeOfQuestionRepository extends JpaRepository<TypeOfQuestion, Long> {
-    Iterable<TypeOfQuestion> findAllByName(String typeOfQuestionName);
+    TypeOfQuestion findByName(String typeOfQuestionName);
 }
