@@ -67,4 +67,9 @@ public class QuestionServiceImpl implements QuestionService {
     public Iterable<Question> findAllByQuizIsNullAndStatusIsTrue() {
         return questionRepository.findAllByQuizIsNullAndStatusIsTrue();
     }
+
+    @Override
+    public Iterable<Question> findAllByContentContainingAndStatusIsTrue(String content) {
+        return questionRepository.findAllByContentContainingAndStatusIsTrue(content);
+    }
 }
