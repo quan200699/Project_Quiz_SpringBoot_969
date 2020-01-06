@@ -32,4 +32,9 @@ public class TypeOfQuestionServiceImpl implements TypeOfQuestionService {
     public void remove(Long id) {
         typeOfQuestionRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<TypeOfQuestion> findAllByName(String typeOfQuestionName) {
+        return typeOfQuestionRepository.findAllByName(typeOfQuestionName);
+    }
 }

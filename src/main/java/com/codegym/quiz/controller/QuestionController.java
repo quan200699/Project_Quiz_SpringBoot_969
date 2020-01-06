@@ -113,4 +113,14 @@ public class QuestionController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    @GetMapping("findAllQuestionByCategory")
+    public ResponseEntity<Iterable<Question>> findAllQuestionByCategory(Category category) {
+        Iterable<Question> questions = questionService.findAllByCategoryAndStatusIsTrue(category);
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
+    @GetMapping("findAllQuestionByTypeOfQuestion")
+    public ResponseEntity<Iterable<Question>> findAllQuestionByTypeOfQuestion(TypeOfQuestion typeOfQuestion) {
+        Iterable<Question> questions = questionService.findAllByTypeOfQuestionAndStatusIsTrue(typeOfQuestion);
+        return new ResponseEntity<>(questions, HttpStatus.OK);
+    }
 }

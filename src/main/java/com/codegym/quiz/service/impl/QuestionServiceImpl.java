@@ -48,11 +48,13 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Iterable<Question> findAllByStatusIsTrue() {
+
         return questionRepository.findAllByStatusIsTrue();
     }
 
     @Override
     public Iterable<Question> findAllByQuiz(Quiz quiz) {
+
         return questionRepository.findAllByQuiz(quiz);
     }
 
