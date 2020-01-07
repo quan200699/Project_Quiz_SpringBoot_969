@@ -38,6 +38,8 @@ public class User implements Serializable {
 
     private String gender;
 
+    private String avatar;
+
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER)

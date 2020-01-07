@@ -69,7 +69,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Iterable<Question> findByContentAndStatusIsTrue(String content) {
+    public Question findByContentAndStatusIsTrue(String content) {
         return questionRepository.findByContentAndStatusIsTrue(content);
     }
 }
