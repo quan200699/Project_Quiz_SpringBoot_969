@@ -151,10 +151,10 @@ public class QuestionController {
     }
     @GetMapping("findAllQuestionByContent")
     public ResponseEntity<Iterable<Question>> findAllQuestionByContent(@RequestParam("content") String content) {
-        Iterable<Question> questions = questionService.findAllByContentAndStatusIsTrue(content);
+        Iterable<Question> questions = questionService.findAllByContentContainingAndStatusIsTrue(content);
         return new ResponseEntity<>(questions,HttpStatus.OK);
     }
 
-    @GetMapping("findAllByContentAndTypeOfQuestionAndCategory")
-    public ResponseEntity<Question> findAllByContentAndTypeOfQuestionAndCategory(@RequestParam("content"))
+    @GetMapping("findAllByContentContainingAndTypeOfQuestionAndCategory")
+    public ResponseEntity<Question> findAllByContentContainingAndTypeOfQuestionAndCategory(@RequestParam("content") String content)
 }
