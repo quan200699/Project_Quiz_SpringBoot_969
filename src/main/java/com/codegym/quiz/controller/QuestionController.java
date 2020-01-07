@@ -156,5 +156,5 @@ public class QuestionController {
     }
 
     @GetMapping("findAllByContentAndTypeOfQuestionAndCategory")
-    public ResponseEntity<Question>
+    public ResponseEntity<Question> findAllByContentAndTypeOfQuestionAndCategory(@RequestParam("content"))
 }
