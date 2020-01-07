@@ -2,8 +2,10 @@ package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.Question;
 import com.codegym.quiz.model.Quiz;
+import com.codegym.quiz.model.User;
 import com.codegym.quiz.service.QuestionService;
 import com.codegym.quiz.service.QuizService;
+import com.codegym.quiz.service.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,9 @@ public class QuizController {
 
     @Autowired
     private QuestionService questionService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping("/quizzes")
     public ResponseEntity<Iterable<Quiz>> listQuiz() {
@@ -64,5 +69,11 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/join")
+    public ResponseEntity<User> joinExam (@PathVariable User user) {
+        emailService.sendEmail(user.getEmail(), "Tham gia kỳ thi: ","/quizzes/{id}");
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 }
