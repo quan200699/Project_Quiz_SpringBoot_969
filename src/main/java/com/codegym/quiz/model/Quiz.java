@@ -20,6 +20,8 @@ public class Quiz implements Serializable {
 
     private LocalDate startedDate;
 
+    private LocalDate endedDate;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "quiz_participant",
             joinColumns = {@JoinColumn(name = "quiz_id")},
