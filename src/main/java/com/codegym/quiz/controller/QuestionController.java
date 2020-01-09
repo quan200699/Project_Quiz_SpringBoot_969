@@ -236,8 +236,7 @@ public class QuestionController {
     }
 
     @GetMapping("findAllQuestionByQuizIsNullAndContentContainingAndCategory")
-    public ResponseEntity<Iterable<Question>> findAllQuestionByQuizIsNullAndContentContainingAndCategory(@RequestParam("content") String content,
-                                                                                                         @RequestParam("category")String category) {
+    public ResponseEntity<Iterable<Question>> findAllQuestionByQuizIsNullAndContentContainingAndCategory(@RequestParam("content") String content, @RequestParam("category")String category) {
         Category currentCategory = categoryService.findByName(category);
         if (currentCategory == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
