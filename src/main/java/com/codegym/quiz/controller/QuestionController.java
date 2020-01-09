@@ -2,6 +2,7 @@ package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.*;
 import com.codegym.quiz.service.*;
+import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -168,6 +169,17 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Iterable<Question> questions = questionService.findAllByContentContainingAndTypeOfQuestionAndCategoryAndStatusIsTrue(content,currentTypeOfQuestion,currentCategory);
+        return new ResponseEntity<>(questions,HttpStatus.OK);
+    }
+
+    @GetMapping("findAllQuestionByContentContainingAndCategory")
+    public ResponseEntity<Iterable<Question>> findAllQuestionByContentContainingAndCategory(@RequestParam("content") String content,
+                                                                                            @RequestParam("category")String category) {
+        Category currentCategory = categoryService.findByName(category);
+        if (currentCategory == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Question> questions = questionService.findAllByContentContainingAndCategoryAndStatusIsTrue(content,currentCategory);
         return new ResponseEntity<>(questions,HttpStatus.OK);
     }
 }
