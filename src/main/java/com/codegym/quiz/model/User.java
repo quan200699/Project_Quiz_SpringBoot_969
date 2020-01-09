@@ -26,6 +26,8 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String confirmPassword;
 
+    private String oldPassword;
+
     private String firstName;
 
     private String lastName;

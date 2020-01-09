@@ -175,4 +175,26 @@ public class UserController {
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @PostMapping("/change-password/{id}")
+    public ResponseEntity<User> changePassword(@PathVariable Long id, @RequestBody User user) {
+        Optional<User> userOptional = userService.findById(id);
+        if (!userOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (!userService.isCorrectConfirmPassword(user)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        String oldPassword = user.getOldPassword();
+        String newPassword = passwordEncoder.encode(user.getPassword());
+        String confirmPassword = passwordEncoder.encode(user.getConfirmPassword());
+        if (!passwordEncoder.matches(oldPassword, userOptional.get().getPassword())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        user.setOldPassword(oldPassword);
+        user.setPassword(newPassword);
+        user.setConfirmPassword(confirmPassword);
+        userService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
 }
