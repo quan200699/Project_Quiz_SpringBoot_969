@@ -113,4 +113,9 @@ public class QuestionServiceImpl implements QuestionService {
         return questionRepository.findAllByQuizIsNullAndContentContainingAndCategoryAndStatusIsTrue(content,category);
     }
 
+    @Override
+    public Iterable<Question> findAllByQuizIsNullAndContentContainingAndTypeOfQuestionAndStatusIsTrue(String content, TypeOfQuestion typeOfQuestion) {
+        return questionRepository.findAllByQuizIsNullAndContentContainingAndTypeOfQuestionAndStatusIsTrue(content,typeOfQuestion);
+    }
+
 }
