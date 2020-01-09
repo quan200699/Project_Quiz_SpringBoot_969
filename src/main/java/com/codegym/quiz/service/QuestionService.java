@@ -35,4 +35,6 @@ public interface QuestionService extends GeneralService<Question> {
     Iterable<Question> findAllByQuizIsNullAndCategoryAndTypeOfQuestionAndStatusIsTrue(Category category, TypeOfQuestion typeOfQuestion);
 
     Iterable<Question> findAllByQuizIsNullAndContentContainingAndCategoryAndStatusIsTrue(String content, Category category);
+
+    Iterable<Question> findAllByQuizIsNullAndContentContainingAndTypeOfQuestionAndStatusIsTrue(String content, TypeOfQuestion typeOfQuestion);
 }

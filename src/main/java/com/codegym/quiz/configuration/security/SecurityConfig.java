@@ -85,7 +85,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/findAllQuestionByContentContainingAndTypeOfQuestion",
                         "/findAllQuestionByQuizIsNullAndContentContaining",
                         "/findAllQuestionByQuizIsNullAndCategory",
-                        "/findAllQuestionByQuizIsNullAndTypeOfQuestion").permitAll()
+                        "/findAllQuestionByQuizIsNullAndTypeOfQuestion",
+                        "/findAllQuestionByQuizIsNullAndCategoryAndTypeOfQuestion",
+                        "/findAllQuestionByQuizIsNullAndContentContainingAndCategory",
+                        "/").permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/categories",
                         "/typeOfQuestions",
