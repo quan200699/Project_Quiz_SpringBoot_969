@@ -210,4 +210,13 @@ public class QuestionController {
         return new ResponseEntity<>(questions,HttpStatus.OK);
     }
 
+    @GetMapping("findAllQuestionByQuizIsNullAndTypeOfQuestion")
+    public ResponseEntity<Iterable<Question>> findAllQuestionByQuizIsNullAndTypeOfQuestion(@RequestParam("typeOfQuestion") String typeOfQuestion) {
+        TypeOfQuestion currentTypeOfQuestion = typeOfQuestionService.findByName(typeOfQuestion);
+        if (currentTypeOfQuestion == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Question> questions = questionService.findAllByQuizIsNullAndTypeOfQuestionAndStatusIsTrue(currentTypeOfQuestion);
+        return new ResponseEntity<>(questions,HttpStatus.OK);
+    }
 }
