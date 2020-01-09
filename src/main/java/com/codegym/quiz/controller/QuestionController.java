@@ -256,4 +256,20 @@ public class QuestionController {
         Iterable<Question> questions = questionService.findAllByQuizIsNullAndContentContainingAndTypeOfQuestionAndStatusIsTrue(content,currentTypeOfQuestion);
         return new ResponseEntity<>(questions,HttpStatus.OK);
     }
+
+    @GetMapping("findAllQuestionByQuizIsNullAndContentContainingAndCategoryAndTypeOfQuestion")
+    public ResponseEntity<Iterable<Question>> findAllQuestionByQuizIsNullAndContentContainingAndCategoryAndTypeOfQuestion(@RequestParam("content") String content,
+                                                                                                                          @RequestParam("category") String category,
+                                                                                                                          @RequestParam("typeOfQuestion") String typeOfQuestion) {
+        Category currentCategory = categoryService.findByName(category);
+        TypeOfQuestion currentTypeOfQuestion = typeOfQuestionService.findByName(typeOfQuestion);
+        if (currentCategory == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (currentTypeOfQuestion == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<Question> questions = questionService.findAllByQuizIsNullAndContentContainingAndCategoryAndTypeOfQuestionAndStatusIsTrue(content,currentCategory,currentTypeOfQuestion);
+        return new ResponseEntity<>(questions,HttpStatus.OK);
+    }
 }
