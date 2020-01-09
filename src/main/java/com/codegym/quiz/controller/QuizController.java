@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,7 +73,7 @@ public class QuizController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<User> joinExam (@PathVariable User user) {
+    public ResponseEntity<User> joinExam (@Valid @RequestBody User user) {
         emailService.sendEmail(user.getEmail(), "Tham gia kỳ thi: ","/quizzes/{id}");
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
