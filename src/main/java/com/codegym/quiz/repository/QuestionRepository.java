@@ -22,4 +22,22 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     Iterable<Question> findAllByContentContainingAndStatusIsTrue(String content);
 
     Iterable<Question> findAllByContentContainingAndTypeOfQuestionAndCategoryAndStatusIsTrue(String content, TypeOfQuestion typeOfQuestion, Category category);
+
+    Iterable<Question> findAllByContentContainingAndCategoryAndStatusIsTrue(String content, Category category);
+
+    Iterable<Question> findAllByContentContainingAndTypeOfQuestionAndStatusIsTrue(String content, TypeOfQuestion typeOfQuestion);
+
+    Iterable<Question> findAllByQuizIsNullAndContentContainingAndStatusIsTrue(String content);
+
+    Iterable<Question> findAllByQuizIsNullAndCategoryAndStatusIsTrue(Category category);
+
+    Iterable<Question> findAllByQuizIsNullAndTypeOfQuestionAndStatusIsTrue(TypeOfQuestion typeOfQuestion);
+
+    Iterable<Question> findAllByQuizIsNullAndCategoryAndTypeOfQuestionAndStatusIsTrue(Category category, TypeOfQuestion typeOfQuestion);
+
+    Iterable<Question> findAllByQuizIsNullAndContentContainingAndCategoryAndStatusIsTrue(String content, Category category);
+
+    Iterable<Question> findAllByQuizIsNullAndContentContainingAndTypeOfQuestionAndStatusIsTrue(String content, TypeOfQuestion typeOfQuestion);
+
+    Iterable<Question> findAllByQuizIsNullAndContentContainingAndCategoryAndTypeOfQuestionAndStatusIsTrue(String content, Category category, TypeOfQuestion typeOfQuestion);
 }
