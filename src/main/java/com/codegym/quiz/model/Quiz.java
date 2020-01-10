@@ -4,7 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -18,9 +18,9 @@ public class Quiz implements Serializable {
 
     private String name;
 
-    private LocalDate startedDate;
+    private LocalDateTime startedDate;
 
-    private LocalDate endedDate;
+    private LocalDateTime endedDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "quiz_participant",

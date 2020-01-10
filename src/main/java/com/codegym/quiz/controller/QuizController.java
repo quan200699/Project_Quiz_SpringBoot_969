@@ -42,6 +42,9 @@ public class QuizController {
 
     @PostMapping("/quizzes")
     public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
+        if (quiz.getEndedDate().isBefore(quiz.getStartedDate())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
         quizService.save(quiz);
         return new ResponseEntity<>(quiz, HttpStatus.OK);
     }
@@ -73,8 +76,8 @@ public class QuizController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<User> joinExam (@Valid @RequestBody User user) {
-        emailService.sendEmail(user.getEmail(), "Tham gia kỳ thi: ","/quizzes/{id}");
-        return new ResponseEntity<>(user,HttpStatus.OK);
+    public ResponseEntity<User> joinExam(@Valid @RequestBody User user) {
+        emailService.sendEmail(user.getEmail(), "Tham gia kỳ thi: ", "/quizzes/{id}");
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
