@@ -34,7 +34,7 @@ public class QuizController {
     }
 
     @GetMapping("/quizzes/{id}")
-    public ResponseEntity<Quiz> quizDetal(@PathVariable Long id) {
+    public ResponseEntity<Quiz> quizDetail(@PathVariable Long id) {
         Optional<Quiz> quizOptional = quizService.findById(id);
         return quizOptional.map(quiz -> new ResponseEntity<>(quiz, HttpStatus.OK)).
                 orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
