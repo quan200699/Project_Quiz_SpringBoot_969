@@ -151,8 +151,8 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/new-password/{id}", method = {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<User> updatePassword(@RequestParam("token") String token, @PathVariable Long id, @RequestBody User user) {
+    @RequestMapping(value = "/new-password", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseEntity<User> updatePassword(@RequestParam("token") String token, @RequestBody User user) {
         VerificationToken verificationToken = verificationTokenService.findByToken(token);
         boolean isExpired = verificationToken.isExpired();
         if (token == null) {
@@ -161,8 +161,8 @@ public class UserController {
         if (isExpired) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        Optional<User> userOptional = userService.findById(id);
-        if (!userOptional.isPresent()) {
+        User currentUser = userService.findByEmail(verificationToken.getUser().getEmail());
+        if (currentUser == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         if (!userService.isCorrectConfirmPassword(user)) {
@@ -170,10 +170,10 @@ public class UserController {
         }
         String newPassword = passwordEncoder.encode(user.getPassword());
         String confirmPassword = passwordEncoder.encode(user.getConfirmPassword());
-        user.setPassword(newPassword);
-        user.setConfirmPassword(confirmPassword);
-        userService.save(user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        currentUser.setPassword(newPassword);
+        currentUser.setConfirmPassword(confirmPassword);
+        userService.save(currentUser);
+        return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
     @PostMapping("/change-password/{id}")

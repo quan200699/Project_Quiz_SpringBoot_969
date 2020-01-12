@@ -43,7 +43,7 @@ public class ForgotPasswordController {
         token.setExpiryDate(10);
         verificationTokenService.save(token);
         emailService.sendEmail(passwordForgotForm.getEmail(), SUBJECT_PASSWORD_FORGOT,
-                TEXT_PASSWORD_FORGOT + env.getProperty("forgotPasswordLink") + user.getId() + "?token="  + token.getToken());
+                TEXT_PASSWORD_FORGOT + env.getProperty("forgotPasswordLink") + "?token=" + token.getToken());
         return new ResponseEntity<>(passwordForgotForm, HttpStatus.OK);
     }
 }
