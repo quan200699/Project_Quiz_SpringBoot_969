@@ -1,12 +1,15 @@
 package com.codegym.quiz.service.impl;
 
 import com.codegym.quiz.model.Quiz;
+import com.codegym.quiz.model.User;
 import com.codegym.quiz.repository.QuizRepository;
 import com.codegym.quiz.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.Set;
+
 @Service
 public class QuizServiceImpl implements QuizService {
     @Autowired
@@ -30,5 +33,10 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public void remove(Long id) {
         quizRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Quiz> findAllByParticipants(Set<User> setParticipants) {
+        return quizRepository.findAllByParticipants(setParticipants);
     }
 }
