@@ -50,7 +50,11 @@ public class QuizController {
         if (!quizOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (quizOptional.get().getStartedDate().isAfter(LocalDateTime.now()) || quizOptional.get().getEndedDate().isBefore(LocalDateTime.now())) {
+        LocalDateTime currentTime = LocalDateTime.now();
+        if (quizOptional.get().getStartedDate().isAfter(currentTime)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (quizOptional.get().getEndedDate().isBefore(currentTime)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
@@ -98,7 +102,7 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Optional<User> userOptional = userService.findById(user.getId());
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         quizOptional.get().getParticipants().add(userOptional.get());
