@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,18 @@ public class QuizController {
         Optional<Quiz> quizOptional = quizService.findById(id);
         return quizOptional.map(quiz -> new ResponseEntity<>(quiz, HttpStatus.OK)).
                 orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/doExam/{id}")
+    public ResponseEntity<Quiz> doExam(@PathVariable Long id) {
+        Optional<Quiz> quizOptional = quizService.findById(id);
+        if (!quizOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (quizOptional.get().getStartedDate().isAfter(LocalDateTime.now()) || quizOptional.get().getEndedDate().isBefore(LocalDateTime.now())) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
     }
 
     @PostMapping("/quizzes")
