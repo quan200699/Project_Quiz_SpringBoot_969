@@ -8,18 +8,21 @@ import com.codegym.quiz.service.QuizService;
 import com.codegym.quiz.service.UserService;
 import com.codegym.quiz.service.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
 public class QuizController {
+    @Autowired
+    private Environment env;
+
     @Autowired
     private QuizService quizService;
 
@@ -43,6 +46,22 @@ public class QuizController {
         Optional<Quiz> quizOptional = quizService.findById(id);
         return quizOptional.map(quiz -> new ResponseEntity<>(quiz, HttpStatus.OK)).
                 orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/doExam/{id}")
+    public ResponseEntity<Quiz> doExam(@PathVariable Long id) {
+        Optional<Quiz> quizOptional = quizService.findById(id);
+        if (!quizOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        LocalDateTime currentTime = LocalDateTime.now();
+        if (quizOptional.get().getStartedDate().isAfter(currentTime)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (quizOptional.get().getEndedDate().isBefore(currentTime)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
     }
 
     @PostMapping("/quizzes")
@@ -87,11 +106,11 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Optional<User> userOptional = userService.findById(user.getId());
-        if(!userOptional.isPresent()){
+        if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         quizOptional.get().getParticipants().add(userOptional.get());
-        emailService.sendEmail(userOptional.get().getEmail(), "Tham gia kỳ thi: ", "http://localhost:4200/recover-password");
+        emailService.sendEmail(userOptional.get().getEmail(), env.getProperty("examSubject"), env.getProperty("linkExam") + quizOptional.get().getId());
         quizService.save(quizOptional.get());
         return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
     }
