@@ -96,6 +96,10 @@ public class QuizController {
         return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
     }
 
-    @GetMapping("findAllByParticipants")
-
+    @GetMapping("findAllQuizByParticipants")
+    public ResponseEntity<Iterable<Quiz>> findAllQuizByParticipants(@RequestParam("participants")
+                                                                                Set<User> participants) {
+        Iterable<Quiz> quizzes = quizService.findAllByParticipants(participants);
+        return new ResponseEntity<>(quizzes,HttpStatus.OK);
+    }
 }
