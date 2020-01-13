@@ -5,13 +5,13 @@ import com.codegym.quiz.model.Quiz;
 import com.codegym.quiz.model.User;
 import com.codegym.quiz.service.QuestionService;
 import com.codegym.quiz.service.QuizService;
+import com.codegym.quiz.service.UserService;
 import com.codegym.quiz.service.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +27,9 @@ public class QuizController {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/quizzes")
     public ResponseEntity<Iterable<Quiz>> listQuiz() {
@@ -88,9 +91,19 @@ public class QuizController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/join")
-    public ResponseEntity<User> joinExam(@Valid @RequestBody User user) {
-        emailService.sendEmail(user.getEmail(), "Tham gia kỳ thi: ", "/quizzes/{id}");
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @PostMapping("/join/{quizId}")
+    public ResponseEntity<Quiz> joinExam(@RequestBody User user, @PathVariable Long quizId) {
+        Optional<Quiz> quizOptional = quizService.findById(quizId);
+        if (!quizOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Optional<User> userOptional = userService.findById(user.getId());
+        if(!userOptional.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        quizOptional.get().getParticipants().add(userOptional.get());
+        emailService.sendEmail(userOptional.get().getEmail(), "Tham gia kỳ thi: ", "http://localhost:4200/recover-password");
+        quizService.save(quizOptional.get());
+        return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
     }
 }
