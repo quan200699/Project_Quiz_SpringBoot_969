@@ -8,6 +8,7 @@ import com.codegym.quiz.service.QuizService;
 import com.codegym.quiz.service.UserService;
 import com.codegym.quiz.service.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,9 @@ import java.util.Optional;
 @RestController
 @CrossOrigin("*")
 public class QuizController {
+    @Autowired
+    private Environment env;
+
     @Autowired
     private QuizService quizService;
 
@@ -106,7 +110,7 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         quizOptional.get().getParticipants().add(userOptional.get());
-        emailService.sendEmail(userOptional.get().getEmail(), "Tham gia kỳ thi: ", "http://localhost:4200/recover-password");
+        emailService.sendEmail(userOptional.get().getEmail(), env.getProperty("examSubject"), env.getProperty("linkExam") + quizOptional.get().getId());
         quizService.save(quizOptional.get());
         return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
     }
