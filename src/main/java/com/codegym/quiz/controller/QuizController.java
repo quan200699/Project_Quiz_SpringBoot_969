@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @CrossOrigin("*")
@@ -117,7 +118,7 @@ public class QuizController {
 
     @GetMapping("findAllQuizByParticipants")
     public ResponseEntity<Iterable<Quiz>> findAllQuizByParticipants(@RequestParam("participants")
-                                                                                Set<User> participants) {
+                                                                            Set<User> participants) {
         Iterable<Quiz> quizzes = quizService.findAllByParticipants(participants);
         return new ResponseEntity<>(quizzes,HttpStatus.OK);
     }
