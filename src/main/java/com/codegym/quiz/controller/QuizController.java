@@ -95,4 +95,7 @@ public class QuizController {
         quizService.save(quizOptional.get());
         return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
     }
+
+    @GetMapping("findAllByParticipants")
+
 }
