@@ -80,6 +80,7 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         quiz.setId(quizOptional.get().getId());
+        quiz.setParticipants(quizOptional.get().getParticipants());
         quizService.save(quiz);
         return new ResponseEntity<>(quiz, HttpStatus.OK);
     }

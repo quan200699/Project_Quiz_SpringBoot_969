@@ -14,7 +14,6 @@ public class CorrectAnswer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String content;
 
     @ManyToOne
