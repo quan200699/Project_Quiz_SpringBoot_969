@@ -2,7 +2,9 @@ package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.Exam;
 import com.codegym.quiz.model.Quiz;
+import com.codegym.quiz.model.User;
 import com.codegym.quiz.service.ExamService;
+import com.codegym.quiz.service.QuizService;
 import com.codegym.quiz.service.UserService;
 import com.codegym.quiz.service.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +30,9 @@ public class ExamController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private QuizService quizService;
 
     @GetMapping("/exams")
     public ResponseEntity<Iterable<Exam>> listExam(){
@@ -65,5 +71,37 @@ public class ExamController {
     public ResponseEntity<Exam> deleteExam(@PathVariable Long id) {
         examService.remove(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/doExam/{id}")
+    public ResponseEntity<Quiz> doExam(@PathVariable Long id){
+        Optional<Quiz> quizOptional = quizService.findById(id);
+        if (!quizOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        LocalDateTime currentTime = LocalDateTime.now();
+        if (quizOptional.get().getStartedDate().isAfter(currentTime)){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if (quizOptional.get().getEndedDate().isBefore(currentTime)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(quizOptional.get(),HttpStatus.OK);
+    }
+
+    @PostMapping("/join/{quizId}")
+    public ResponseEntity<Quiz> joinExam(@RequestBody User user,@PathVariable Long quizId){
+        Optional<Quiz> quizOptional = quizService.findById(quizId);
+        if (!quizOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Optional<User> userOptional = userService.findById(user.getId());
+        if (!userOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        quizOptional.get().getParticipants().add(userOptional.get());
+        emailService.sendEmail(userOptional.get().getEmail(), env.getProperty("examSubject"), env.getProperty("linkExam") + quizOptional.get().getId());
+        quizService.save(quizOptional.get());
+        return new ResponseEntity<>(quizOptional.get(),HttpStatus.OK);
     }
 }
