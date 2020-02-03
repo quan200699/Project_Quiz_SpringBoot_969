@@ -10,6 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -35,4 +37,10 @@ public class CategoryRepositoryTest {
         assertThat(categoryRepository.findAll()).isNotNull();
     }
 
+    @DisplayName("findAll can return a list has 1 element")
+    @Test
+    public void whenFindAll_thenReturnListHasOneElement() {
+        List<Category> categories = categoryRepository.findAll();
+        assertThat(categories).hasSize(1);
+    }
 }
