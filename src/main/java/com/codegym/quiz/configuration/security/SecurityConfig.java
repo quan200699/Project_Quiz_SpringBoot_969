@@ -1,6 +1,6 @@
 package com.codegym.quiz.configuration.security;
 
-import com.codegym.quiz.configuration.customConfig.CustomAccessDeniedHandler;
+import  com.codegym.quiz.configuration.customConfig.CustomAccessDeniedHandler;
 import com.codegym.quiz.configuration.customConfig.RestAuthenticationEntryPoint;
 import com.codegym.quiz.configuration.filter.JwtAuthenticationFilter;
 import com.codegym.quiz.service.UserService;
