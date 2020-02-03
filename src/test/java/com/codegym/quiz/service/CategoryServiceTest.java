@@ -40,4 +40,11 @@ public class CategoryServiceTest {
         List<Category> actualCategories = (List<Category>) categoryService.findAll();
         assertThat(actualCategories).hasSize(1);
     }
+
+    @DisplayName("findById return a category has name Android")
+    @Test
+    public void whenFindByIdReturnCategoryNameAndroid() {
+        Optional<Category> actualCategory = categoryService.findById(1L);
+        assertThat(actualCategory.get().getName()).isEqualTo("Android");
+    }
 }
