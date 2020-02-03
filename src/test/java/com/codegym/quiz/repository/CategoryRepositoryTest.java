@@ -47,8 +47,14 @@ public class CategoryRepositoryTest {
 
     @DisplayName("findById can return a category has name Java")
     @Test
-    public void whenFindAll_thenReturnCategoryHasNameJava() {
+    public void whenFindById_thenReturnCategoryHasNameJava() {
         Optional<Category> category = categoryRepository.findById(1L);
         assertThat(category.get().getName()).isEqualTo("Java");
+    }
+
+    @DisplayName("findByName can return a category has name Java not null")
+    @Test
+    public void whenFindByName_thenReturnACategoryNotNull() {
+        assertThat(categoryRepository.findByName("Java")).isNotNull();
     }
 }
