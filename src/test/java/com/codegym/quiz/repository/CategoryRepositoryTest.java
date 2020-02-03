@@ -1,6 +1,8 @@
 package com.codegym.quiz.repository;
 
 import com.codegym.quiz.model.Category;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,18 @@ public class CategoryRepositoryTest {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Test
-    public void whenFindAll_thenReturnListNotNull() {
+    @BeforeEach
+    void init() {
         Category category = new Category();
         category.setName("Java");
         entityManager.persist(category);
         entityManager.flush();
+    }
+
+    @DisplayName("findAll can return list (is not null)")
+    @Test
+    public void whenFindAll_thenReturnListNotNull() {
         assertThat(categoryRepository.findAll()).isNotNull();
     }
+
 }
