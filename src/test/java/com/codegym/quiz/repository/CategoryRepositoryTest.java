@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,5 +43,12 @@ public class CategoryRepositoryTest {
     public void whenFindAll_thenReturnListHasOneElement() {
         List<Category> categories = categoryRepository.findAll();
         assertThat(categories).hasSize(1);
+    }
+
+    @DisplayName("findById can return a category has name Java")
+    @Test
+    public void whenFindAll_thenReturnCategoryHasNameJava() {
+        Optional<Category> category = categoryRepository.findById(1L);
+        assertThat(category.get().getName()).isEqualTo("Java");
     }
 }
