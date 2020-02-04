@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,5 +43,12 @@ public class TypeOfQuestionRepositoryTest {
     public void whenFindAll_thenReturnListHas1Element() {
         List<TypeOfQuestion> typeOfQuestions = typeOfQuestionRepository.findAll();
         assertThat(typeOfQuestions).hasSize(1);
+    }
+
+    @DisplayName("type of question repository findById method can return a type of question has name Chọn đáp án chính xác nhất")
+    @Test
+    public void whenFindById_thenReturnTypeOfQuestion() {
+        Optional<TypeOfQuestion> typeOfQuestion = typeOfQuestionRepository.findById(1L);
+        assertThat(typeOfQuestion.get().getName()).isEqualTo("Chọn đáp án chính xác nhất");
     }
 }
