@@ -31,9 +31,6 @@ public class ExamController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private QuizService e;
-
     @GetMapping("/exams")
     public ResponseEntity<Iterable<Exam>> listExam(){
         Iterable<Exam> exams = examService.findAll();
