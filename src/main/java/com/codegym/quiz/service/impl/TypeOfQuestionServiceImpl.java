@@ -13,6 +13,13 @@ public class TypeOfQuestionServiceImpl implements TypeOfQuestionService {
     @Autowired
     private TypeOfQuestionRepository typeOfQuestionRepository;
 
+    public TypeOfQuestionServiceImpl() {
+    }
+
+    public TypeOfQuestionServiceImpl(TypeOfQuestionRepository typeOfQuestionRepository) {
+        this.typeOfQuestionRepository = typeOfQuestionRepository;
+    }
+
     @Override
     public Iterable<TypeOfQuestion> findAll() {
         return typeOfQuestionRepository.findAll();
