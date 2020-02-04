@@ -45,9 +45,6 @@ public class ExamController {
 
     @PostMapping("/exams")
     public ResponseEntity<Exam> createExam(@RequestBody Exam exam){
-        if (exam.getMinutes().isBefore(exam.getStartedDate())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         examService.save(exam);
         return new ResponseEntity<>(exam,HttpStatus.CREATED);
     }
@@ -78,9 +75,6 @@ public class ExamController {
         }
         LocalDateTime currentTime = LocalDateTime.now();
         if (examOptional.get().getStartedDate().isAfter(currentTime)){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        if (examOptional.get().getMinutes().isBefore(currentTime)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(examOptional.get(),HttpStatus.OK);
