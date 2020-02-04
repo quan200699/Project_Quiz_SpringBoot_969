@@ -32,7 +32,7 @@ public class ExamController {
     private UserService userService;
 
     @Autowired
-    private QuizService quizService;
+    private QuizService e;
 
     @GetMapping("/exams")
     public ResponseEntity<Iterable<Exam>> listExam(){
@@ -74,19 +74,19 @@ public class ExamController {
     }
 
     @GetMapping("/doExam/{id}")
-    public ResponseEntity<Quiz> doExam(@PathVariable Long id){
-        Optional<Quiz> quizOptional = quizService.findById(id);
-        if (!quizOptional.isPresent()) {
+    public ResponseEntity<Exam> doExam(@PathVariable Long id){
+        Optional<Exam> examOptional = examService.findById(id);
+        if (!examOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         LocalDateTime currentTime = LocalDateTime.now();
-        if (quizOptional.get().getStartedDate().isAfter(currentTime)){
+        if (examOptional.get().getStartedDate().isAfter(currentTime)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        if (quizOptional.get().getEndedDate().isBefore(currentTime)) {
+        if (examOptional.get().getMinutes().isBefore(currentTime)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(quizOptional.get(),HttpStatus.OK);
+        return new ResponseEntity<>(examOptional.get(),HttpStatus.OK);
     }
 
     @PostMapping("/join/{examId}")
