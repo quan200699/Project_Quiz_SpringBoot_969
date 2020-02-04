@@ -48,7 +48,7 @@ public class QuizController {
                 orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/doExam/{id}")
+    /*@GetMapping("/doExam/{id}")
     public ResponseEntity<Quiz> doExam(@PathVariable Long id) {
         Optional<Quiz> quizOptional = quizService.findById(id);
         if (!quizOptional.isPresent()) {
@@ -62,7 +62,7 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
-    }
+    }*/
 
     @PostMapping("/quizzes")
     public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
@@ -100,7 +100,7 @@ public class QuizController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping("/join/{quizId}")
+    /*@PostMapping("/join/{quizId}")
     public ResponseEntity<Quiz> joinExam(@RequestBody User user, @PathVariable Long quizId) {
         Optional<Quiz> quizOptional = quizService.findById(quizId);
         if (!quizOptional.isPresent()) {
@@ -114,5 +114,5 @@ public class QuizController {
         emailService.sendEmail(userOptional.get().getEmail(), env.getProperty("examSubject"), env.getProperty("linkExam") + quizOptional.get().getId());
         quizService.save(quizOptional.get());
         return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
-    }
+    }*/
 }
