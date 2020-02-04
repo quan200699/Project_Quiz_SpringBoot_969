@@ -89,19 +89,19 @@ public class ExamController {
         return new ResponseEntity<>(quizOptional.get(),HttpStatus.OK);
     }
 
-    @PostMapping("/join/{quizId}")
-    public ResponseEntity<Quiz> joinExam(@RequestBody User user,@PathVariable Long quizId){
-        Optional<Quiz> quizOptional = quizService.findById(quizId);
-        if (!quizOptional.isPresent()) {
+    @PostMapping("/join/{examId}")
+    public ResponseEntity<Exam> joinExam(@RequestBody User user,@PathVariable Long examId){
+        Optional<Exam> examOptional = examService.findById(examId);
+        if (!examOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Optional<User> userOptional = userService.findById(user.getId());
         if (!userOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        quizOptional.get().getParticipants().add(userOptional.get());
-        emailService.sendEmail(userOptional.get().getEmail(), env.getProperty("examSubject"), env.getProperty("linkExam") + quizOptional.get().getId());
-        quizService.save(quizOptional.get());
-        return new ResponseEntity<>(quizOptional.get(),HttpStatus.OK);
+        examOptional.get().getParticipants().add(userOptional.get());
+        emailService.sendEmail(userOptional.get().getEmail(), env.getProperty("examSubject"), env.getProperty("linkExam") + examOptional.get().getId());
+        examService.save(examOptional.get());
+        return new ResponseEntity<>(examOptional.get(),HttpStatus.OK);
     }
 }
