@@ -51,4 +51,10 @@ public class TypeOfQuestionRepositoryTest {
         Optional<TypeOfQuestion> typeOfQuestion = typeOfQuestionRepository.findById(1L);
         assertThat(typeOfQuestion.get().getName()).isEqualTo("Chọn đáp án chính xác nhất");
     }
+
+    @DisplayName("type of question repository findByName method can return a type of question not null")
+    @Test
+    public void whenFindByName_thenReturnTypeOfQuestionNotNull() {
+        assertThat(typeOfQuestionRepository.findByName("Chọn đáp án chính xác nhất")).isNotNull();
+    }
 }
