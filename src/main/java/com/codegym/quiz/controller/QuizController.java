@@ -21,19 +21,10 @@ import java.util.Optional;
 @CrossOrigin("*")
 public class QuizController {
     @Autowired
-    private Environment env;
-
-    @Autowired
     private QuizService quizService;
 
     @Autowired
     private QuestionService questionService;
-
-    @Autowired
-    private EmailService emailService;
-
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/quizzes")
     public ResponseEntity<Iterable<Quiz>> listQuiz() {
@@ -48,27 +39,8 @@ public class QuizController {
                 orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    /*@GetMapping("/doExam/{id}")
-    public ResponseEntity<Quiz> doExam(@PathVariable Long id) {
-        Optional<Quiz> quizOptional = quizService.findById(id);
-        if (!quizOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        LocalDateTime currentTime = LocalDateTime.now();
-        if (quizOptional.get().getStartedDate().isAfter(currentTime)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        if (quizOptional.get().getEndedDate().isBefore(currentTime)) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
-    }*/
-
     @PostMapping("/quizzes")
     public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
-        if (quiz.getEndedDate().isBefore(quiz.getStartedDate())) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
         quizService.save(quiz);
         return new ResponseEntity<>(quiz, HttpStatus.OK);
     }
@@ -80,7 +52,6 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         quiz.setId(quizOptional.get().getId());
-        quiz.setParticipants(quizOptional.get().getParticipants());
         quizService.save(quiz);
         return new ResponseEntity<>(quiz, HttpStatus.OK);
     }
@@ -99,20 +70,4 @@ public class QuizController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    /*@PostMapping("/join/{quizId}")
-    public ResponseEntity<Quiz> joinExam(@RequestBody User user, @PathVariable Long quizId) {
-        Optional<Quiz> quizOptional = quizService.findById(quizId);
-        if (!quizOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        Optional<User> userOptional = userService.findById(user.getId());
-        if (!userOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        quizOptional.get().getParticipants().add(userOptional.get());
-        emailService.sendEmail(userOptional.get().getEmail(), env.getProperty("examSubject"), env.getProperty("linkExam") + quizOptional.get().getId());
-        quizService.save(quizOptional.get());
-        return new ResponseEntity<>(quizOptional.get(), HttpStatus.OK);
-    }*/
 }
