@@ -33,4 +33,17 @@ public class TypeOfQuestionServiceTest {
     public void whenFindAll_thenReturnListNotNull() {
         assertThat(typeOfQuestionService.findAll()).isNotNull();
     }
+
+    @DisplayName("findAll method in typeOfQuestionService can return a list has 1 element")
+    @Test
+    public void whenFindAll_thenReturnListHasOneElement() {
+        assertThat(typeOfQuestionService.findAll()).hasSize(1);
+    }
+
+    @DisplayName("findById method in typeOfQuestionService can return a type of question not null")
+    @Test
+    public void whenFindById_thenReturnTypeOfQuestionNotNull() {
+        Optional<TypeOfQuestion> typeOfQuestion = typeOfQuestionService.findById(1L);
+        assertThat(typeOfQuestion.get().getName()).isEqualTo("Chọn đáp án chính xác nhất");
+    }
 }
