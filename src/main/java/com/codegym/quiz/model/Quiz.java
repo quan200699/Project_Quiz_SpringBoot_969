@@ -15,4 +15,6 @@ public class Quiz implements Serializable {
     private Long id;
 
     private String name;
+
+    private int minutes;
 }

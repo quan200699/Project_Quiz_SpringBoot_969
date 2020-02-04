@@ -20,8 +20,6 @@ public class Exam implements Serializable {
 
     private LocalDateTime startedDate;
 
-    private int minutes;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "exam_participant",
             joinColumns = {@JoinColumn(name = "exam_id")},
