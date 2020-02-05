@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ResultRepository extends JpaRepository<Result, Long> {
     Iterable<Result> findAllByExam(Exam exam);
-    Result findAllByUser(User user);
+    Iterable<Result> findAllByUser(User user);
 }

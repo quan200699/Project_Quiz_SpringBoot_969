@@ -35,12 +35,12 @@ public class ResultController {
     }
 
     @GetMapping("/findAllResultByUser")
-    public ResponseEntity<Result> findAllResultByUser(@RequestParam("user") String user) {
+    public ResponseEntity<Iterable<Result>> findAllResultByUser(@RequestParam("user") String user) {
         User currentUser = userService.findByUsername(user);
         if (currentUser == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Result result = resultService.findAllByUser(currentUser);
+        Iterable<Result> result = resultService.findAllByUser(currentUser);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

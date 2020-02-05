@@ -22,7 +22,7 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public Result findAllByUser(User user) {
+    public Iterable<Result> findAllByUser(User user) {
         return resultRepository.findAllByUser(user);
     }
 
