@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -18,9 +19,11 @@ public class User implements Serializable {
     private Long id;
 
     @Column(unique = true, nullable = false)
+    @Size(min = 6, max = 12)
     private String username;
 
     @Column(nullable = false)
+    @Size(min = 6, max = 12)
     private String password;
 
     @Column(nullable = false)
