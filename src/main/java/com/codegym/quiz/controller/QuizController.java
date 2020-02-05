@@ -2,13 +2,9 @@ package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.Question;
 import com.codegym.quiz.model.Quiz;
-import com.codegym.quiz.model.User;
 import com.codegym.quiz.service.QuestionService;
 import com.codegym.quiz.service.QuizService;
-import com.codegym.quiz.service.UserService;
-import com.codegym.quiz.service.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
