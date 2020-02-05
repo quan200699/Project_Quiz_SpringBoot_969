@@ -1,6 +1,6 @@
 package com.codegym.quiz.configuration.security;
 
-import  com.codegym.quiz.configuration.customConfig.CustomAccessDeniedHandler;
+import com.codegym.quiz.configuration.customConfig.CustomAccessDeniedHandler;
 import com.codegym.quiz.configuration.customConfig.RestAuthenticationEntryPoint;
 import com.codegym.quiz.configuration.filter.JwtAuthenticationFilter;
 import com.codegym.quiz.service.UserService;
@@ -72,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.authorizeRequests()
                 .antMatchers("/",
+                        "/results",
                         LOGIN,
                         "/register",
                         "/confirm-account/**",
@@ -94,9 +95,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/categories",
                         "/typeOfQuestions",
                         "/questions",
-                        "/answers/**",
+                        "/answers",
                         "/quizzes",
-                        "/exams").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                        "/exams",
+                        "/results").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.POST, "/categories",
                         "/typeOfQuestions",
                         "/questions",
