@@ -33,7 +33,8 @@ public class AnswerController {
     @GetMapping("/getAnswer/{id}")
     public ResponseEntity<Answer> getAnswerDetail(@PathVariable Long id) {
         Optional<Answer> answer = answerService.findById(id);
-        return answer.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return answer.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).
+                orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/answers")
