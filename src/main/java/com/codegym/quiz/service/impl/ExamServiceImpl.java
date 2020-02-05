@@ -32,4 +32,9 @@ public class ExamServiceImpl implements ExamService {
     public void remove(Long id) {
         examRepository.deleteById(id);
     }
+
+    @Override
+    public Exam findByName(String exam) {
+        return examRepository.findByName(exam);
+    }
 }
