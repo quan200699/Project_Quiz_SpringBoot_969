@@ -88,6 +88,10 @@ public class UserController {
             roleAdmin.setId(2L);
             roleAdmin.setName("ROLE_ADMIN");
             roleService.save(roleUser);
+            Role roleTutor = new Role();
+            roleTutor.setId(3L);
+            roleTutor.setName("ROLE_TUTOR");
+            roleService.save(roleTutor);
         }
         Role role = roleService.findRoleByName(ROLE_USER);
         Set<Role> roles = new HashSet<>();

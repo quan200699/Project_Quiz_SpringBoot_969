@@ -72,7 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().authenticationEntryPoint(restServicesEntryPoint());
         http.authorizeRequests()
                 .antMatchers("/",
-                        "/results",
                         LOGIN,
                         "/register",
                         "/confirm-account/**",
@@ -98,25 +97,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/answers",
                         "/quizzes",
                         "/exams",
-                        "/results").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                        "/results")
+                .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_TUTOR')")
                 .antMatchers(HttpMethod.POST, "/categories",
                         "/typeOfQuestions",
                         "/questions",
                         "/answers",
-                        "/quizzes",
-                        "/exams").access("hasRole('ROLE_ADMIN')")
+                        "/quizzes").access("hasRole('ROLE_TUTOR')")
+                .antMatchers(HttpMethod.POST, "/exams")
+                .access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.PUT, "/categories",
                         "/typeOfQuestions",
                         "/questions",
                         "/answers",
-                        "/quizzes",
-                        "/exams").access("hasRole('ROLE_ADMIN')")
+                        "/quizzes").access("hasRole('ROLE_TUTOR')")
+                .antMatchers(HttpMethod.PUT, "/exams")
+                .access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/categories",
                         "/typeOfQuestions",
                         "/questions",
                         "/answers",
-                        "/quizzes",
-                        "/exams").access("hasRole('ROLE_ADMIN')")
+                        "/quizzes").access("hasRole('ROLE_TUTOR')")
+                .antMatchers(HttpMethod.DELETE, "/exams")
+                .access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.PUT, "/users")
                 .access("hasRole('ROLE_USER')")
                 .anyRequest().authenticated()
