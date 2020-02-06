@@ -207,7 +207,7 @@ public class UserController {
     }
 
     @GetMapping("/usersByClass")
-    public ResponseEntity<Iterable<User>> findAllUserByClass(@RequestParam("class") String name) {
+    public ResponseEntity<Iterable<User>> findAllUserByClass(@RequestParam("studentClass") String name) {
         StudentClass studentClass = studentClassService.findByName(name);
         if (studentClass == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
