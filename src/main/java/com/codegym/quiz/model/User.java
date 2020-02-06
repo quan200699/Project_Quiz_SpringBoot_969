@@ -19,11 +19,11 @@ public class User implements Serializable {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    @Size(min = 6, max = 12)
+    @Size(min = 6)
     private String username;
 
     @Column(nullable = false)
-    @Size(min = 6, max = 12)
+    @Size(min = 6)
     private String password;
 
     @Column(nullable = false)
