@@ -1,4 +1,6 @@
 package com.codegym.quiz.service;
 
-public interface StudentClassService {
+import com.codegym.quiz.model.StudentClass;
+
+public interface StudentClassService extends GeneralService<StudentClass> {
 }

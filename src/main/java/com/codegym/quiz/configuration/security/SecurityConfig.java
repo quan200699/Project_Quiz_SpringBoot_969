@@ -97,28 +97,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/answers",
                         "/quizzes",
                         "/exams",
-                        "/results")
+                        "/results",
+                        "/classes")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_TUTOR')")
                 .antMatchers(HttpMethod.POST, "/categories",
                         "/typeOfQuestions",
                         "/questions",
                         "/answers",
                         "/quizzes").access("hasRole('ROLE_TUTOR')")
-                .antMatchers(HttpMethod.POST, "/exams")
+                .antMatchers(HttpMethod.POST,
+                        "/exams",
+                        "/classes")
                 .access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.PUT, "/categories",
                         "/typeOfQuestions",
                         "/questions",
                         "/answers",
                         "/quizzes").access("hasRole('ROLE_TUTOR')")
-                .antMatchers(HttpMethod.PUT, "/exams")
+                .antMatchers(HttpMethod.PUT,
+                        "/exams",
+                        "/classes")
                 .access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/categories",
                         "/typeOfQuestions",
                         "/questions",
                         "/answers",
                         "/quizzes").access("hasRole('ROLE_TUTOR')")
-                .antMatchers(HttpMethod.DELETE, "/exams")
+                .antMatchers(HttpMethod.DELETE,
+                        "/exams",
+                        "/classes")
                 .access("hasRole('ROLE_ADMIN')")
                 .antMatchers(HttpMethod.PUT, "/users")
                 .access("hasRole('ROLE_USER')")
