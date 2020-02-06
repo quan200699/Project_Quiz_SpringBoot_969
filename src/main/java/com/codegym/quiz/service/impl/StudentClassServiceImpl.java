@@ -32,4 +32,9 @@ public class StudentClassServiceImpl implements StudentClassService {
     public void remove(Long id) {
         studentClassRepository.deleteById(id);
     }
+
+    @Override
+    public StudentClass findByName(String name) {
+        return studentClassRepository.findByName(name);
+    }
 }

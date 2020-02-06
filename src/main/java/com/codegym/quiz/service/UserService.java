@@ -1,5 +1,6 @@
 package com.codegym.quiz.service;
 
+import com.codegym.quiz.model.StudentClass;
 import com.codegym.quiz.model.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,17 +14,13 @@ public interface UserService extends UserDetailsService {
 
     User findByUsername(String username);
 
-    User getCurrentUser();
-
     Optional<User> findById(Long id);
 
-    UserDetails loadUserById(Long id);
-
     boolean checkLogin(User user);
-
-    boolean isRegister(User user);
 
     User findByEmail(String email);
 
     boolean isCorrectConfirmPassword(User user);
+
+    Iterable<User> findAllByStudentClass(StudentClass studentClass);
 }

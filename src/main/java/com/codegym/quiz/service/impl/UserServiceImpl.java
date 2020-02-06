@@ -1,5 +1,6 @@
 package com.codegym.quiz.service.impl;
 
+import com.codegym.quiz.model.StudentClass;
 import com.codegym.quiz.model.User;
 import com.codegym.quiz.model.UserPrinciple;
 import com.codegym.quiz.repository.UserRepository;
@@ -54,32 +55,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getCurrentUser() {
-        User user;
-        String userName;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails) principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        user = this.findByUsername(userName);
-        return user;
-    }
-
-    @Override
     public Optional<User> findById(Long id) {
         return userRepository.findById(id);
-    }
-
-    @Override
-    public UserDetails loadUserById(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        if (!user.isPresent()) {
-            throw new NullPointerException();
-        }
-        return UserPrinciple.build(user.get());
     }
 
     @Override
@@ -88,25 +65,12 @@ public class UserServiceImpl implements UserService {
         boolean isCorrectUser = false;
         for (User currentUser : users) {
             if (currentUser.getUsername().equals(user.getUsername())
-                    && user.getPassword().equals(currentUser.getPassword())&&
+                    && user.getPassword().equals(currentUser.getPassword()) &&
                     currentUser.isEnabled()) {
                 isCorrectUser = true;
             }
         }
         return isCorrectUser;
-    }
-
-    @Override
-    public boolean isRegister(User user) {
-        boolean isRegister = false;
-        Iterable<User> users = this.findAll();
-        for (User currentUser : users) {
-            if (user.getUsername().equals(currentUser.getUsername())) {
-                isRegister = true;
-                break;
-            }
-        }
-        return isRegister;
     }
 
     @Override
@@ -117,9 +81,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isCorrectConfirmPassword(User user) {
         boolean isCorrectConfirmPassword = false;
-        if(user.getPassword().equals(user.getConfirmPassword())){
+        if (user.getPassword().equals(user.getConfirmPassword())) {
             isCorrectConfirmPassword = true;
         }
         return isCorrectConfirmPassword;
+    }
+
+    @Override
+    public Iterable<User> findAllByStudentClass(StudentClass studentClass) {
+        return userRepository.findAllByStudentClass(studentClass);
     }
 }

@@ -1,10 +1,8 @@
 package com.codegym.quiz.controller;
 
-import com.codegym.quiz.model.JwtResponse;
-import com.codegym.quiz.model.Role;
-import com.codegym.quiz.model.User;
-import com.codegym.quiz.model.VerificationToken;
+import com.codegym.quiz.model.*;
 import com.codegym.quiz.service.RoleService;
+import com.codegym.quiz.service.StudentClassService;
 import com.codegym.quiz.service.UserService;
 import com.codegym.quiz.service.VerificationTokenService;
 import com.codegym.quiz.service.impl.EmailService;
@@ -58,6 +56,9 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private StudentClassService studentClassService;
 
     @GetMapping("/users")
     public ResponseEntity<Iterable<User>> showAllUser() {
@@ -203,5 +204,15 @@ public class UserController {
         user.setConfirmPassword(confirmPassword);
         userService.save(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/usersByClass")
+    public ResponseEntity<Iterable<User>> findAllUserByClass(@RequestParam("class") String name) {
+        StudentClass studentClass = studentClassService.findByName(name);
+        if (studentClass == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<User> users = userService.findAllByStudentClass(studentClass);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }
