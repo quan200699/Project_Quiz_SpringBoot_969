@@ -55,4 +55,18 @@ public class ResultController {
         Optional<Result> result = resultService.findById(id);
         return result.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    @GetMapping("/findResultByExamAndUser")
+    public ResponseEntity<Result> findResultByExamAndUser(@RequestParam("exam") String exam, @RequestParam("user") String user) {
+        Exam currentExam = examService.findByName(exam);
+        if (exam == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        User currentUser = userService.findByUsername(user);
+        if (currentExam == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Result result = resultService.findByExamAndUser(currentExam, currentUser);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

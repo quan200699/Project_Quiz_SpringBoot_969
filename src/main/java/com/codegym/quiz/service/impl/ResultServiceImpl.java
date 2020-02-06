@@ -27,6 +27,11 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
+    public Result findByExamAndUser(Exam exam, User user) {
+        return resultRepository.findByExamAndUser(exam, user);
+    }
+
+    @Override
     public Iterable<Result> findAll() {
         return resultRepository.findAll();
     }

@@ -6,5 +6,8 @@ import com.codegym.quiz.model.User;
 
 public interface ResultService extends GeneralService<Result> {
     Iterable<Result> findAllByExam(Exam exam);
+
     Iterable<Result> findAllByUser(User user);
+
+    Result findByExamAndUser(Exam exam, User user);
 }
