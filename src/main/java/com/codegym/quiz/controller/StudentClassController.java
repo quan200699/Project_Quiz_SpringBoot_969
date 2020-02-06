@@ -1,6 +1,5 @@
 package com.codegym.quiz.controller;
 
-import com.codegym.quiz.model.Category;
 import com.codegym.quiz.model.StudentClass;
 import com.codegym.quiz.service.StudentClassService;
 import org.springframework.beans.factory.annotation.Autowired;

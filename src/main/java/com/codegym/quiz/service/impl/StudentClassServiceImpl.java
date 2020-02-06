@@ -3,12 +3,14 @@ package com.codegym.quiz.service.impl;
 import com.codegym.quiz.model.StudentClass;
 import com.codegym.quiz.repository.StudentClassRepository;
 import com.codegym.quiz.service.StudentClassService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class StudentClassServiceImpl implements StudentClassService {
+    @Autowired
     private StudentClassRepository studentClassRepository;
 
     @Override
