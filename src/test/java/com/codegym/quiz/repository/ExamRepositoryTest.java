@@ -40,4 +40,10 @@ public class ExamRepositoryTest {
     public void whenFindAll_thenReturnAListHasOneElement() {
         assertThat(examRepository.findAll()).hasSize(1);
     }
+
+    @DisplayName("findById can return a exam not null")
+    @Test
+    public void whenFindById_thenReturnAExamNotNull() {
+        assertThat(examRepository.findById(1L)).isNotNull();
+    }
 }
