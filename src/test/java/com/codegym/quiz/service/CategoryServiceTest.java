@@ -30,7 +30,7 @@ public class CategoryServiceTest {
 
     @DisplayName("findAll can return list (is not null)")
     @Test
-    void whenFindAllNotNull() {
+    public void whenFindAllNotNull() {
         assertThat(categoryService.findAll()).isNotNull();
     }
 
