@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class TypeOfQuestionRepositoryTest {
+public abstract class TypeOfQuestionRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
 
