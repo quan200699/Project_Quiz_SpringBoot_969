@@ -25,7 +25,7 @@ public class TypeOfQuestionRepositoryTest {
     private TypeOfQuestionRepository typeOfQuestionRepository;
 
     @BeforeEach
-    void init() {
+    public void init() {
         TypeOfQuestion typeOfQuestion = new TypeOfQuestion();
         typeOfQuestion.setName("Chọn đáp án chính xác nhất");
         entityManager.persist(typeOfQuestion);
