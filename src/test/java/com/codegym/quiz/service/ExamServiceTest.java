@@ -39,4 +39,10 @@ public class ExamServiceTest {
     public void whenFindAll_thenReturnAListHasOneElement() {
         assertThat(examService.findAll()).hasSize(1);
     }
+
+    @DisplayName("find by id can return a element has id 1")
+    @Test
+    public void whenFindById_thenReturnAElement() {
+        assertThat(examService.findById(1L)).isNotNull();
+    }
 }
