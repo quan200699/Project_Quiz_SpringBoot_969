@@ -33,4 +33,10 @@ public class ExamServiceTest {
     public void whenFindAll_thenReturnAListNotNull() {
         assertThat(examService.findAll()).isNotNull();
     }
+
+    @DisplayName("find all can return a list has one element")
+    @Test
+    public void whenFindAll_thenReturnAListHasOneElement() {
+        assertThat(examService.findAll()).hasSize(1);
+    }
 }
