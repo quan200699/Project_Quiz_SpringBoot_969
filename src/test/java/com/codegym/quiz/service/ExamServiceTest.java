@@ -45,4 +45,10 @@ public class ExamServiceTest {
     public void whenFindById_thenReturnAElement() {
         assertThat(examService.findById(1L)).isNotNull();
     }
+
+    @DisplayName("find by id can return a element null when not found")
+    @Test
+    public void whenFindById_thenReturnAElementNull() {
+        assertThat(examService.findById(2L)).isNotPresent();
+    }
 }
