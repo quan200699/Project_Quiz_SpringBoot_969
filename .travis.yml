@@ -11,7 +11,7 @@ cache:
   directories:
     - $HOME/.m2
     - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
+#    - $HOME/.gradle/wrapper/
 
 script:
   - ./gradlew check
