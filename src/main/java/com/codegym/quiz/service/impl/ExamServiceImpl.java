@@ -13,6 +13,13 @@ public class ExamServiceImpl implements ExamService {
     @Autowired
     private ExamRepository examRepository;
 
+    public ExamServiceImpl() {
+    }
+
+    public ExamServiceImpl(ExamRepository examRepository) {
+        this.examRepository = examRepository;
+    }
+
     @Override
     public Iterable<Exam> findAll() {
         return examRepository.findAll();
