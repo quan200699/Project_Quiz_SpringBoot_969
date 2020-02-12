@@ -83,9 +83,22 @@ public class CategoryControllerTest {
     }
 
     @WithMockUser(value = "admin", roles = {"admin"})
-    @DisplayName("create category return status 403 with role tutor")
+    @DisplayName("create category return status 403 with role admin")
     @Test
     public void create_whenCreateCategoryWithRoleAdmin_thenReturnStatus403()
+            throws Exception {
+        Category category = new Category();
+        category.setName("Hello");
+        mvc.perform(post("/categories")
+                .content(asJsonString(category))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @WithMockUser(value = "user", roles = {"user"})
+    @DisplayName("create category return status 403 with role user")
+    @Test
+    public void create_whenCreateCategoryWithRoleUser_thenReturnStatus403()
             throws Exception {
         Category category = new Category();
         category.setName("Hello");
