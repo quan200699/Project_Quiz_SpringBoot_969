@@ -182,6 +182,16 @@ public class CategoryControllerTest {
                 .andExpect(status().isForbidden());
     }
 
+    @WithMockUser(value = "tutor", roles = {"TUTOR"})
+    @DisplayName("delete category return 404 when category id not found with role tutor")
+    @Test
+    public void delete_whenDeleteCategoryWithRoleTutor_thenReturnStatus404()
+            throws Exception {
+        mvc.perform(delete("/categories/2")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
