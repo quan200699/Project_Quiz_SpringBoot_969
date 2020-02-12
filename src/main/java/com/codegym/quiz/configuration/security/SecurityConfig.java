@@ -91,14 +91,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/findAllQuestionByQuizIsNullAndContentContainingAndTypeOfQuestion",
                         "/findAllQuestionByQuizIsNullAndContentContainingAndCategoryAndTypeOfQuestion").permitAll()
                 .antMatchers(HttpMethod.GET,
-                        "/categories",
-                        "/typeOfQuestions",
-                        "/questions",
-                        "/answers",
-                        "/quizzes",
-                        "/exams",
-                        "/results",
-                        "/classes")
+                        "/categories/**",
+                        "/typeOfQuestions/**",
+                        "/questions/**",
+                        "/answers/**",
+                        "/quizzes/**",
+                        "/exams/**",
+                        "/results/**",
+                        "/classes/**")
                 .access("hasRole('USER') or hasRole('ADMIN') or hasRole('TUTOR')")
                 .antMatchers(HttpMethod.POST, "/categories",
                         "/typeOfQuestions",
@@ -109,23 +109,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/exams",
                         "/classes")
                 .access("hasRole('ADMIN')")
-                .antMatchers(HttpMethod.PUT, "/categories",
-                        "/typeOfQuestions",
-                        "/questions",
-                        "/answers",
-                        "/quizzes").access("hasRole('TUTOR')")
+                .antMatchers(HttpMethod.PUT, "/categories/**",
+                        "/typeOfQuestions/**",
+                        "/questions/**",
+                        "/answers/**",
+                        "/quizzes/**").access("hasRole('TUTOR')")
                 .antMatchers(HttpMethod.PUT,
-                        "/exams",
-                        "/classes")
+                        "/exams/**",
+                        "/classes/**")
                 .access("hasRole('ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/categories",
-                        "/typeOfQuestions",
-                        "/questions",
-                        "/answers",
-                        "/quizzes").access("hasRole('TUTOR')")
+                        "/typeOfQuestions/**",
+                        "/questions/**",
+                        "/answers/**",
+                        "/quizzes/**").access("hasRole('TUTOR')")
                 .antMatchers(HttpMethod.DELETE,
-                        "/exams",
-                        "/classes")
+                        "/exams/**",
+                        "/classes/**")
                 .access("hasRole('ADMIN')")
                 .antMatchers(HttpMethod.PUT, "/users")
                 .access("hasRole('USER')")

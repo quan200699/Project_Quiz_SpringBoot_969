@@ -126,6 +126,19 @@ public class CategoryControllerTest {
                 .andExpect(content().contentType("application/json"));
     }
 
+    @WithMockUser(value = "admin", roles = {"ADMIN"})
+    @DisplayName("update category return 403 with role admin")
+    @Test
+    public void update_whenUpdateCategoryWithRoleAdmin_thenReturnStatus403()
+            throws Exception {
+        Category category = new Category();
+        category.setName("Hello");
+        mvc.perform(put("/categories/1")
+                .content(asJsonString(category))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
