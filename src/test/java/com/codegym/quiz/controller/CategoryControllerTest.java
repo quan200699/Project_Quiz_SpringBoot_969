@@ -203,6 +203,17 @@ public class CategoryControllerTest {
                 .andExpect(content().contentType("application/json"));
     }
 
+    @WithMockUser(value = "admin", roles = {"ADMIN"})
+    @DisplayName("get category return 200 with role admin")
+    @Test
+    public void getDetail_whenGetCategoryWithRoleAdmin_thenReturnStatus200()
+            throws Exception {
+        mvc.perform(get("/categories/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
