@@ -63,6 +63,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .passwordEncoder(passwordEncoder())
+                .withUser("admin")
+                .password(passwordEncoder().encode("123456"))
+                .roles("ADMIN");
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
 
@@ -99,36 +104,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/exams",
                         "/results",
                         "/classes")
-                .access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN') or hasRole('ROLE_TUTOR')")
+                .access("hasRole('USER') or hasRole('ADMIN') or hasRole('TUTOR')")
                 .antMatchers(HttpMethod.POST, "/categories",
                         "/typeOfQuestions",
                         "/questions",
                         "/answers",
-                        "/quizzes").access("hasRole('ROLE_TUTOR')")
+                        "/quizzes").access("hasRole('TUTOR')")
                 .antMatchers(HttpMethod.POST,
                         "/exams",
                         "/classes")
-                .access("hasRole('ROLE_ADMIN')")
+                .access("hasRole('ADMIN')")
                 .antMatchers(HttpMethod.PUT, "/categories",
                         "/typeOfQuestions",
                         "/questions",
                         "/answers",
-                        "/quizzes").access("hasRole('ROLE_TUTOR')")
+                        "/quizzes").access("hasRole('TUTOR')")
                 .antMatchers(HttpMethod.PUT,
                         "/exams",
                         "/classes")
-                .access("hasRole('ROLE_ADMIN')")
+                .access("hasRole('ADMIN')")
                 .antMatchers(HttpMethod.DELETE, "/categories",
                         "/typeOfQuestions",
                         "/questions",
                         "/answers",
-                        "/quizzes").access("hasRole('ROLE_TUTOR')")
+                        "/quizzes").access("hasRole('TUTOR')")
                 .antMatchers(HttpMethod.DELETE,
                         "/exams",
                         "/classes")
-                .access("hasRole('ROLE_ADMIN')")
+                .access("hasRole('ADMIN')")
                 .antMatchers(HttpMethod.PUT, "/users")
-                .access("hasRole('ROLE_USER')")
+                .access("hasRole('USER')")
                 .anyRequest().authenticated()
                 .and().csrf().disable()
                 .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));

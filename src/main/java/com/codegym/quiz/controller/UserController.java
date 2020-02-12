@@ -87,11 +87,11 @@ public class UserController {
             roleUser.setName(ROLE_USER);
             Role roleAdmin = new Role();
             roleAdmin.setId(2L);
-            roleAdmin.setName("ROLE_ADMIN");
+            roleAdmin.setName(ROLE_ADMIN);
             roleService.save(roleUser);
             Role roleTutor = new Role();
             roleTutor.setId(3L);
-            roleTutor.setName("ROLE_TUTOR");
+            roleTutor.setName(ROLE_TUTOR);
             roleService.save(roleTutor);
         }
         Role role = roleService.findRoleByName(ROLE_USER);
