@@ -3,12 +3,11 @@ package com.codegym.quiz.controller;
 import com.codegym.quiz.model.Category;
 import com.codegym.quiz.service.CategoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -34,6 +33,7 @@ public class CategoryControllerTest {
     @BeforeEach
     public void setup() {
         Category category = new Category();
+        category.setId(1L);
         category.setName("category 01");
         categoryService.save(category);
         mvc = MockMvcBuilders
@@ -79,6 +79,7 @@ public class CategoryControllerTest {
             throws Exception {
         Category category = new Category();
         category.setName("Hello");
+        Iterable<Category> categories = categoryService.findAll();
         mvc.perform(post("/categories")
                 .content(asJsonString(category))
                 .contentType(MediaType.APPLICATION_JSON))
@@ -117,10 +118,8 @@ public class CategoryControllerTest {
     @Test
     public void update_whenUpdateCategoryWithRoleTutor_thenReturnStatus200()
             throws Exception {
-        Category category = new Category();
-        category.setName("Hello");
-        mvc.perform(put("/categories/1")
-                .content(asJsonString(category))
+        mvc.perform(put("/categories/{id}", 1L)
+                .content(asJsonString(new Category("Hello")))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
@@ -133,7 +132,7 @@ public class CategoryControllerTest {
             throws Exception {
         Category category = new Category();
         category.setName("Hello");
-        mvc.perform(put("/categories/1")
+        mvc.perform(put("/categories/{id}", 1L)
                 .content(asJsonString(category))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
@@ -146,7 +145,7 @@ public class CategoryControllerTest {
             throws Exception {
         Category category = new Category();
         category.setName("Hello");
-        mvc.perform(put("/categories/1")
+        mvc.perform(put("/categories/{id}", 1L)
                 .content(asJsonString(category))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
@@ -157,7 +156,7 @@ public class CategoryControllerTest {
     @Test
     public void delete_whenDeleteCategoryWithRoleTutor_thenReturnStatus204()
             throws Exception {
-        mvc.perform(delete("/categories/1")
+        mvc.perform(delete("/categories/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -167,7 +166,7 @@ public class CategoryControllerTest {
     @Test
     public void delete_whenDeleteCategoryWithRoleAdmin_thenReturnStatus403()
             throws Exception {
-        mvc.perform(delete("/categories/1")
+        mvc.perform(delete("/categories/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
     }
@@ -177,7 +176,7 @@ public class CategoryControllerTest {
     @Test
     public void delete_whenDeleteCategoryWithRoleUser_thenReturnStatus403()
             throws Exception {
-        mvc.perform(delete("/categories/1")
+        mvc.perform(delete("/categories/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
     }
@@ -187,7 +186,7 @@ public class CategoryControllerTest {
     @Test
     public void delete_whenDeleteCategoryWithRoleTutor_thenReturnStatus404()
             throws Exception {
-        mvc.perform(delete("/categories/2")
+        mvc.perform(delete("/categories/{id}", 0L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -197,7 +196,7 @@ public class CategoryControllerTest {
     @Test
     public void getDetail_whenGetCategoryWithRoleTutor_thenReturnStatus200()
             throws Exception {
-        mvc.perform(get("/categories/1")
+        mvc.perform(get("/categories/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
@@ -208,7 +207,7 @@ public class CategoryControllerTest {
     @Test
     public void getDetail_whenGetCategoryWithRoleAdmin_thenReturnStatus200()
             throws Exception {
-        mvc.perform(get("/categories/1")
+        mvc.perform(get("/categories/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
@@ -219,7 +218,7 @@ public class CategoryControllerTest {
     @Test
     public void getDetail_whenGetCategoryWithRoleUser_thenReturnStatus200()
             throws Exception {
-        mvc.perform(get("/categories/1")
+        mvc.perform(get("/categories/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
@@ -230,7 +229,7 @@ public class CategoryControllerTest {
     @Test
     public void getDetail_whenGetCategoryWithRoleUser_thenReturnStatus404()
             throws Exception {
-        mvc.perform(get("/categories/2")
+        mvc.perform(get("/categories/{id}", 0L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

@@ -1,6 +1,8 @@
 package com.codegym.quiz.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,4 +18,11 @@ public class Category implements Serializable {
 
     @Column(nullable = false)
     private String name;
+
+    public Category() {
+    }
+
+    public Category(String name) {
+        this.name = name;
+    }
 }
