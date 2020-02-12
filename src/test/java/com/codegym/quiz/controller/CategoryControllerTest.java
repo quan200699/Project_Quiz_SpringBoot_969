@@ -156,7 +156,7 @@ public class CategoryControllerTest {
     @DisplayName("delete category return 204 with role tutor")
     @Test
     public void delete_whenDeleteCategoryWithRoleTutor_thenReturnStatus204()
-        throws Exception {
+            throws Exception {
         mvc.perform(delete("/categories/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
@@ -166,7 +166,7 @@ public class CategoryControllerTest {
     @DisplayName("delete category return 403 with role admin")
     @Test
     public void delete_whenDeleteCategoryWithRoleAdmin_thenReturnStatus403()
-        throws Exception {
+            throws Exception {
         mvc.perform(delete("/categories/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
@@ -176,7 +176,7 @@ public class CategoryControllerTest {
     @DisplayName("delete category return 403 with role user")
     @Test
     public void delete_whenDeleteCategoryWithRoleUser_thenReturnStatus403()
-        throws Exception {
+            throws Exception {
         mvc.perform(delete("/categories/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
@@ -190,6 +190,17 @@ public class CategoryControllerTest {
         mvc.perform(delete("/categories/2")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
+    }
+
+    @WithMockUser(value = "tutor", roles = {"TUTOR"})
+    @DisplayName("get category return 200 with role tutor")
+    @Test
+    public void getDetail_whenGetCategoryWithRoleTutor_thenReturnStatus200()
+            throws Exception {
+        mvc.perform(get("/categories/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
     }
 
     public static String asJsonString(final Object obj) {
