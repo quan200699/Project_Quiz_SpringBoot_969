@@ -34,6 +34,8 @@ public class CategoryControllerTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
+        Category category = new Category();
+        category.setName("category 01");
     }
 
     @WithMockUser(value = "admin", roles = {"ADMIN"})
@@ -78,6 +80,19 @@ public class CategoryControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
+    }
+
+    @WithMockUser(value = "admin", roles = {"admin"})
+    @DisplayName("create category return status 403 with role tutor")
+    @Test
+    public void create_whenCreateCategoryWithRoleAdmin_thenReturnStatus403()
+            throws Exception {
+        Category category = new Category();
+        category.setName("Hello");
+        mvc.perform(post("/categories")
+                .content(asJsonString(category))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
     }
 
     public static String asJsonString(final Object obj) {
