@@ -118,7 +118,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/exams/**",
                         "/classes/**")
                 .access("hasRole('ADMIN')")
-                .antMatchers(HttpMethod.DELETE, "/categories",
+                .antMatchers(HttpMethod.DELETE, "/categories/**",
                         "/typeOfQuestions/**",
                         "/questions/**",
                         "/answers/**",

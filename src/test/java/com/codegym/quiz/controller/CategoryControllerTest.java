@@ -162,6 +162,16 @@ public class CategoryControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    @WithMockUser(value = "admin", roles = {"ADMIN"})
+    @DisplayName("delete category return 403 with role admin")
+    @Test
+    public void delete_whenDeleteCategoryWithRoleAdmin_thenReturnStatus403()
+        throws Exception {
+        mvc.perform(delete("/categories/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
