@@ -52,4 +52,14 @@ public class CategoryControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
+    @WithMockUser(value = "tutor")
+    @DisplayName("find all return status OK with role tutor")
+    @Test
+    public void findAll_whenGetCategoriesWithRoleTutor_thenReturnStatus200()
+            throws Exception {
+        mvc.perform(get("/categories")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }
