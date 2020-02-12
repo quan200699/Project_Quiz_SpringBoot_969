@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -16,8 +17,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,16 +26,20 @@ public class CategoryControllerTest {
     @Autowired
     private WebApplicationContext context;
 
+    @Autowired
+    private CategoryService categoryService;
+
     private MockMvc mvc;
 
     @BeforeEach
     public void setup() {
+        Category category = new Category();
+        category.setName("category 01");
+        categoryService.save(category);
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
-        Category category = new Category();
-        category.setName("category 01");
     }
 
     @WithMockUser(value = "admin", roles = {"ADMIN"})
@@ -106,6 +110,20 @@ public class CategoryControllerTest {
                 .content(asJsonString(category))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
+    }
+
+    @WithMockUser(value = "tutor", roles = {"TUTOR"})
+    @DisplayName("update category return 200 with role tutor")
+    @Test
+    public void update_whenUpdateCategoryWithRoleTutor_thenReturnStatus200()
+            throws Exception {
+        Category category = new Category();
+        category.setName("Hello");
+        mvc.perform(put("/categories/1")
+                .content(asJsonString(category))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
     }
 
     public static String asJsonString(final Object obj) {
