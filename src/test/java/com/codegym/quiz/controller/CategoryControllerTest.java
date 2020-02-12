@@ -225,6 +225,16 @@ public class CategoryControllerTest {
                 .andExpect(content().contentType("application/json"));
     }
 
+    @WithMockUser(value = "user", roles = {"USER"})
+    @DisplayName("get category return 404 when id not found")
+    @Test
+    public void getDetail_whenGetCategoryWithRoleUser_thenReturnStatus404()
+            throws Exception {
+        mvc.perform(get("/categories/2")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
+
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
