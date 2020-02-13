@@ -2,7 +2,6 @@ package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.Category;
 import com.codegym.quiz.service.CategoryService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

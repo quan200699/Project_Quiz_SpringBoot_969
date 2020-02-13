@@ -28,4 +28,16 @@ public class Exam implements Serializable {
 
     @ManyToOne
     private Quiz quiz;
+
+    public Exam() {
+    }
+
+    public Exam(String name) {
+        this.name = name;
+    }
+
+    public Exam(String name, LocalDateTime startedDate) {
+        this.name = name;
+        this.startedDate = startedDate;
+    }
 }
