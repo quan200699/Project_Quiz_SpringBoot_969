@@ -31,8 +31,8 @@ public class TypeOfQuestionServiceImpl implements TypeOfQuestionService {
     }
 
     @Override
-    public void save(TypeOfQuestion model) {
-        typeOfQuestionRepository.save(model);
+    public TypeOfQuestion save(TypeOfQuestion model) {
+        return typeOfQuestionRepository.save(model);
     }
 
     @Override

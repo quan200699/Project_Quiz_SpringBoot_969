@@ -46,8 +46,7 @@ public class ResultController {
 
     @PostMapping("/results")
     public ResponseEntity<Result> createResult(@RequestBody Result result) {
-        resultService.save(result);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+        return new ResponseEntity<>(resultService.save(result), HttpStatus.CREATED);
     }
 
     @GetMapping("/results/{id}")

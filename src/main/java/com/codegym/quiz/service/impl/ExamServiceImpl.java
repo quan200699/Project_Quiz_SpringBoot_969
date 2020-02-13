@@ -31,8 +31,8 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public void save(Exam model) {
-        examRepository.save(model);
+    public Exam save(Exam model) {
+       return examRepository.save(model);
     }
 
     @Override

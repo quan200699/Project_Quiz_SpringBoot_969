@@ -43,8 +43,7 @@ public class AnswerController {
         if (!questionOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        answerService.save(answer);
-        return new ResponseEntity<>(answer, HttpStatus.OK);
+        return new ResponseEntity<>(answerService.save(answer), HttpStatus.OK);
     }
 
     @PutMapping("/answers/{id}")
@@ -53,8 +52,7 @@ public class AnswerController {
         if (!answerOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        answerService.save(answer);
-        return new ResponseEntity<>(answer, HttpStatus.OK);
+        return new ResponseEntity<>(answerService.save(answer), HttpStatus.OK);
     }
 
     @DeleteMapping("/answers/{id}")

@@ -42,8 +42,8 @@ public class ResultServiceImpl implements ResultService {
     }
 
     @Override
-    public void save(Result model) {
-        resultRepository.save(model);
+    public Result save(Result model) {
+       return resultRepository.save(model);
     }
 
     @Override

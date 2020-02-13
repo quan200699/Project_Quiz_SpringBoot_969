@@ -24,8 +24,8 @@ public class StudentClassServiceImpl implements StudentClassService {
     }
 
     @Override
-    public void save(StudentClass model) {
-        studentClassRepository.save(model);
+    public StudentClass save(StudentClass model) {
+        return studentClassRepository.save(model);
     }
 
     @Override

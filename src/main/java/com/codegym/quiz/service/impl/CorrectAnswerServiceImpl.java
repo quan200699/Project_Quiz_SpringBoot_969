@@ -25,8 +25,8 @@ public class CorrectAnswerServiceImpl implements CorrectAnswerService {
     }
 
     @Override
-    public void save(CorrectAnswer model) {
-        correctAnswerRepository.save(model);
+    public CorrectAnswer save(CorrectAnswer model) {
+        return correctAnswerRepository.save(model);
     }
 
     @Override

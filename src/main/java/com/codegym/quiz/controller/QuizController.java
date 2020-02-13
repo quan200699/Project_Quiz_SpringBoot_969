@@ -36,8 +36,7 @@ public class QuizController {
 
     @PostMapping("/quizzes")
     public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
-        quizService.save(quiz);
-        return new ResponseEntity<>(quiz, HttpStatus.OK);
+        return new ResponseEntity<>(quizService.save(quiz), HttpStatus.OK);
     }
 
     @PutMapping("/quizzes/{id}")
@@ -47,8 +46,7 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         quiz.setId(quizOptional.get().getId());
-        quizService.save(quiz);
-        return new ResponseEntity<>(quiz, HttpStatus.OK);
+        return new ResponseEntity<>(quizService.save(quiz), HttpStatus.OK);
     }
 
     @DeleteMapping("/quizzes/{id}")

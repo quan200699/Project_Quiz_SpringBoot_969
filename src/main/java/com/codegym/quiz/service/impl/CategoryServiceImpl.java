@@ -31,8 +31,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void save(Category model) {
-        categoryRepository.save(model);
+    public Category save(Category model) {
+        return categoryRepository.save(model);
     }
 
     @Override
@@ -43,10 +43,5 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findByName(String categoryName) {
         return categoryRepository.findByName(categoryName);
-    }
-
-    @Override
-    public Category save2(Category model) {
-        return categoryRepository.save(model);
     }
 }

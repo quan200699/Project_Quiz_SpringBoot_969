@@ -2,9 +2,7 @@ package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.Category;
 import com.codegym.quiz.service.CategoryService;
-import com.codegym.quiz.service.MyService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,15 +31,8 @@ public class CategoryControllerTest {
 
     @BeforeEach
     public void setup() {
-        Category category1 = new Category();
-        category1.setId(1L);
-        category1.setName("category 01");
-        Category category2 = new Category();
-        category2.setId(2L);
-        category2.setName("category 02");
-        MyService<Category> myService = categoryService;
-        Category myCat = myService.save2(category1);
-        Category myCat2 = myService.save2(category2);
+        Category category1 = categoryService.save(new Category("category 01"));
+        Category category2 = categoryService.save(new Category("category 02"));
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())

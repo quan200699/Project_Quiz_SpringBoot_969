@@ -1,10 +1,8 @@
 package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.Exam;
-import com.codegym.quiz.model.Quiz;
 import com.codegym.quiz.model.User;
 import com.codegym.quiz.service.ExamService;
-import com.codegym.quiz.service.QuizService;
 import com.codegym.quiz.service.UserService;
 import com.codegym.quiz.service.impl.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +43,7 @@ public class ExamController {
 
     @PostMapping("/exams")
     public ResponseEntity<Exam> createExam(@RequestBody Exam exam){
-        examService.save(exam);
-        return new ResponseEntity<>(exam,HttpStatus.CREATED);
+        return new ResponseEntity<>(examService.save(exam),HttpStatus.CREATED);
     }
 
     @PutMapping("/exams/{id}")
@@ -57,8 +54,7 @@ public class ExamController {
         }
         exam.setId(examOptional.get().getId());
         exam.setParticipants(examOptional.get().getParticipants());
-        examService.save(exam);
-        return new ResponseEntity<>(exam, HttpStatus.OK);
+        return new ResponseEntity<>(examService.save(exam), HttpStatus.OK);
     }
 
     @DeleteMapping("/exams/{id}")

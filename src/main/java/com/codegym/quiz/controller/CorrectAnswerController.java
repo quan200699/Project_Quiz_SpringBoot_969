@@ -38,8 +38,7 @@ public class CorrectAnswerController {
 
     @PostMapping("/correctAnswers")
     public ResponseEntity<CorrectAnswer> createCorrectAnswer(@RequestBody CorrectAnswer correctAnswer) {
-        correctAnswerService.save(correctAnswer);
-        return new ResponseEntity<>(correctAnswer, HttpStatus.OK);
+        return new ResponseEntity<>(correctAnswerService.save(correctAnswer), HttpStatus.OK);
     }
 
     @PutMapping("/correctAnswers/{id}")
@@ -48,8 +47,7 @@ public class CorrectAnswerController {
         if (!correctAnswerOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        correctAnswerService.save(correctAnswer);
-        return new ResponseEntity<>(correctAnswer, HttpStatus.OK);
+        return new ResponseEntity<>(correctAnswerService.save(correctAnswer), HttpStatus.OK);
     }
 
     @DeleteMapping("/correctAnswers/{id}")

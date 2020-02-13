@@ -78,8 +78,7 @@ public class QuestionController {
 
     @PostMapping("/questions")
     public ResponseEntity<Question> createQuestion(@RequestBody Question question) {
-        questionService.save(question);
-        return new ResponseEntity<>(question, HttpStatus.CREATED);
+        return new ResponseEntity<>(questionService.save(question), HttpStatus.CREATED);
     }
 
     @GetMapping("/questions/{id}")
@@ -96,8 +95,7 @@ public class QuestionController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         question.setId(questionOptional.get().getId());
-        questionService.save(question);
-        return new ResponseEntity<>(question, HttpStatus.OK);
+        return new ResponseEntity<>(questionService.save(question), HttpStatus.OK);
     }
 
     @DeleteMapping("/questions/{id}")

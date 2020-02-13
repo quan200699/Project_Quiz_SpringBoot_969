@@ -34,8 +34,7 @@ public class StudentClassController {
         if (bindingResult.hasFieldErrors()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        studentClassService.save(studentClass);
-        return new ResponseEntity<>(studentClass, HttpStatus.OK);
+        return new ResponseEntity<>(studentClassService.save(studentClass), HttpStatus.OK);
     }
 
     @PutMapping("/classes/{id}")
@@ -48,8 +47,7 @@ public class StudentClassController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         studentClass.setId(studentClassOptional.get().getId());
-        studentClassService.save(studentClass);
-        return new ResponseEntity<>(studentClass, HttpStatus.OK);
+        return new ResponseEntity<>(studentClassService.save(studentClass), HttpStatus.OK);
     }
 
     @DeleteMapping("/classes/{id}")
