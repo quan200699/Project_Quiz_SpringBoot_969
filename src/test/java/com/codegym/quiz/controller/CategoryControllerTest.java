@@ -2,12 +2,13 @@ package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.Category;
 import com.codegym.quiz.service.CategoryService;
+import com.codegym.quiz.service.MyService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -32,10 +33,15 @@ public class CategoryControllerTest {
 
     @BeforeEach
     public void setup() {
-        Category category = new Category();
-        category.setId(1L);
-        category.setName("category 01");
-        categoryService.save(category);
+        Category category1 = new Category();
+        category1.setId(1L);
+        category1.setName("category 01");
+        Category category2 = new Category();
+        category2.setId(2L);
+        category2.setName("category 02");
+        MyService<Category> myService = categoryService;
+        Category myCat = myService.save2(category1);
+        Category myCat2 = myService.save2(category2);
         mvc = MockMvcBuilders
                 .webAppContextSetup(context)
                 .apply(springSecurity())
@@ -118,8 +124,11 @@ public class CategoryControllerTest {
     @Test
     public void update_whenUpdateCategoryWithRoleTutor_thenReturnStatus200()
             throws Exception {
-        mvc.perform(put("/categories/{id}", 1L)
-                .content(asJsonString(new Category("Hello")))
+        Category category = new Category();
+        category.setName("Hello");
+
+        mvc.perform(put("/categories/1")
+                .content(asJsonString(category))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
@@ -156,7 +165,7 @@ public class CategoryControllerTest {
     @Test
     public void delete_whenDeleteCategoryWithRoleTutor_thenReturnStatus204()
             throws Exception {
-        mvc.perform(delete("/categories/{id}", 1L)
+        mvc.perform(delete("/categories/{id}", 2L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
@@ -166,7 +175,7 @@ public class CategoryControllerTest {
     @Test
     public void delete_whenDeleteCategoryWithRoleAdmin_thenReturnStatus403()
             throws Exception {
-        mvc.perform(delete("/categories/{id}", 1L)
+        mvc.perform(delete("/categories/{id}", 2L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
     }
@@ -176,7 +185,7 @@ public class CategoryControllerTest {
     @Test
     public void delete_whenDeleteCategoryWithRoleUser_thenReturnStatus403()
             throws Exception {
-        mvc.perform(delete("/categories/{id}", 1L)
+        mvc.perform(delete("/categories/{id}", 2L)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
     }

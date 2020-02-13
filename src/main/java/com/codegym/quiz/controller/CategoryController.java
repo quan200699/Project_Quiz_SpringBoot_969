@@ -2,6 +2,7 @@ package com.codegym.quiz.controller;
 
 import com.codegym.quiz.model.Category;
 import com.codegym.quiz.service.CategoryService;
+import com.codegym.quiz.service.MyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -44,11 +46,14 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         Optional<Category> categoryOptional = categoryService.findById(id);
+        List<Category> categories = (List<Category>) categoryService.findAll();
+
         if (!categoryOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         category.setId(categoryOptional.get().getId());
-        categoryService.save(category);
+        MyService<Category> myService = categoryService;
+        Category myCat = myService.save2(category);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
