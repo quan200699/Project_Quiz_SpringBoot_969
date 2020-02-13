@@ -78,4 +78,15 @@ public class TypeOfQuestionControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
     }
+
+    @WithMockUser(value = "admin", roles = {"ADMIN"})
+    @DisplayName("find by id return status 200 with role admin")
+    @Test
+    public void findById_whenGetTypeOfQuestionDetailWithRoleAdmin_thenReturnStatus200()
+            throws Exception {
+        mvc.perform(get("/typeOfQuestions/{id}",1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
+    }
 }
