@@ -56,4 +56,14 @@ public class TypeOfQuestionControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
+    @WithMockUser(value = "tutor", roles = {"TUTOR"})
+    @DisplayName("find all return status 200 with role tutor")
+    @Test
+    public void findAll_whenGetTypeOfQuestionsWithRoleTutor_thenReturnStatus200()
+            throws Exception {
+        mvc.perform(get("/typeOfQuestions")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }
