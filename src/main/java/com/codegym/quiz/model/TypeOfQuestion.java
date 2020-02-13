@@ -15,4 +15,11 @@ public class TypeOfQuestion implements Serializable {
     private Long id;
 
     private String name;
+
+    public TypeOfQuestion() {
+    }
+
+    public TypeOfQuestion(String name) {
+        this.name = name;
+    }
 }
