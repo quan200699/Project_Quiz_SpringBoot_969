@@ -15,6 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -65,5 +66,16 @@ public class TypeOfQuestionControllerTest {
         mvc.perform(get("/typeOfQuestions")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @WithMockUser(value = "tutor", roles = {"TUTOR"})
+    @DisplayName("find by id return status 200 with role tutor")
+    @Test
+    public void findById_whenGetTypeOfQuestionDetailWithRoleTutor_thenReturnStatus200()
+            throws Exception {
+        mvc.perform(get("/typeOfQuestions/{id}",1)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
     }
 }
