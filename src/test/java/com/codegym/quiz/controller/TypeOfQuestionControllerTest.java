@@ -100,4 +100,14 @@ public class TypeOfQuestionControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
     }
+
+    @WithMockUser(value = "user", roles = {"USER"})
+    @DisplayName("find by id return status 404 with role user")
+    @Test
+    public void findById_whenGetTypeOfQuestionDetailWithRoleUser_thenReturnStatus404()
+            throws Exception {
+        mvc.perform(get("/typeOfQuestions/{id}",2)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }
