@@ -74,4 +74,16 @@ public class ExamControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
+
+    @WithMockUser(value = "tutor", roles = {"TUTOR"})
+    @DisplayName("find all return status 200 with role tutor")
+    @Test
+    public void findAll_whenGetExamsWithRoleTutor_thenReturnStatus200()
+            throws Exception {
+        given(examService.findAll()).willReturn(exams);
+        mvc.perform(get("/exams")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
+    }
 }
