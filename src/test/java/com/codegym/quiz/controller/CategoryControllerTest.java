@@ -76,7 +76,6 @@ public class CategoryControllerTest {
             throws Exception {
         Category category = new Category();
         category.setName("Hello");
-        Iterable<Category> categories = categoryService.findAll();
         mvc.perform(post("/categories")
                 .content(asJsonString(category))
                 .contentType(MediaType.APPLICATION_JSON))
