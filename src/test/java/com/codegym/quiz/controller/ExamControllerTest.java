@@ -106,4 +106,16 @@ public class ExamControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
     }
+
+    @WithMockUser(value = "admin", roles = {"ADMIN"})
+    @DisplayName("find by id return status 200 with role admin")
+    @Test
+    public void findById_whenGetExamsWithRoleAdmin_thenReturnStatus200()
+            throws Exception {
+        given(examService.findById(1L)).willReturn(Optional.of(exam1));
+        mvc.perform(get("/exams/{id}",1L)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
+    }
 }
