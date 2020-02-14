@@ -187,7 +187,20 @@ public class ExamControllerTest {
     @WithMockUser(value = "user", roles = {"USER"})
     @DisplayName("update exam return status 403 with role user")
     @Test
-    public void update_whenUpdateExamsWithRoleUser_thenReturnStatusUser()
+    public void update_whenUpdateExamsWithRoleUser_thenReturnStatus403()
+            throws Exception {
+        given(examService.findById(1L)).willReturn(Optional.of(exam1));
+        given(examService.save(any(Exam.class))).willReturn(exam1);
+        mvc.perform(put("/exams/{id}",1L)
+                .content(asJsonString(exam1))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @WithMockUser(value = "tutor", roles = {"TUTOR"})
+    @DisplayName("update exam return status 403 with role tutor")
+    @Test
+    public void update_whenUpdateExamsWithRoleTutor_thenReturnStatus403()
             throws Exception {
         given(examService.findById(1L)).willReturn(Optional.of(exam1));
         given(examService.save(any(Exam.class))).willReturn(exam1);
