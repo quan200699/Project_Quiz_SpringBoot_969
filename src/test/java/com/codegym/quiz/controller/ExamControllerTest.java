@@ -206,9 +206,9 @@ public class ExamControllerTest {
     }
 
     @WithMockUser(value = "admin", roles = {"ADMIN"})
-    @DisplayName("delete exam return status 200 with role admin")
+    @DisplayName("delete exam return status 204 with role admin")
     @Test
-    public void delete_whenDeleteExamsWithRoleAdmin_thenReturnStatus200()
+    public void delete_whenDeleteExamsWithRoleAdmin_thenReturnStatus204()
             throws Exception {
         given(examService.findById(1L)).willReturn(Optional.of(exam1));
         Mockito.doNothing().when(examService).remove(any(Long.class));
