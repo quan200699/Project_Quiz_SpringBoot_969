@@ -27,8 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -168,6 +167,20 @@ public class ExamControllerTest {
                 .content(asJsonString(exam1))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
+                .andExpect(content().contentType("application/json"));
+    }
+
+    @WithMockUser(value = "admin", roles = {"ADMIN"})
+    @DisplayName("update exam return status 200 with role admin")
+    @Test
+    public void update_whenUpdateExamsWithRoleAdmin_thenReturnStatus200()
+            throws Exception {
+        given(examService.findById(1L)).willReturn(Optional.of(exam1));
+        given(examService.save(any(Exam.class))).willReturn(exam1);
+        mvc.perform(put("/exams/{id}",1L)
+                .content(asJsonString(exam1))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
     }
 }
