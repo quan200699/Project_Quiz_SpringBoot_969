@@ -146,6 +146,18 @@ public class ExamControllerTest {
                 .andExpect(status().isForbidden());
     }
 
+    @WithMockUser(value = "tutor", roles = {"TUTOR"})
+    @DisplayName("create exam return status 403 with role tutor")
+    @Test
+    public void create_whenCreateExamsWithRoleTutor_thenReturnStatus403()
+            throws Exception {
+        given(examService.save(any(Exam.class))).willReturn(exam1);
+        mvc.perform(post("/exams")
+                .content(asJsonString(exam1))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
     @WithMockUser(value = "admin", roles = {"ADMIN"})
     @DisplayName("create exam return status 201 with role admin")
     @Test
