@@ -145,17 +145,17 @@ public class ExamControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
     }
-//
-//    @WithMockUser(value = "admin", roles = {"ADMIN"})
-//    @DisplayName("create exam return status 403 with role admin")
-//    @Test
-//    public void create_whenCreateExamsWithRoleAdmin_thenReturnStatus403()
-//            throws Exception {
-//        given(examService.save(any(Exam.class))).willReturn(exam1);
-//        mvc.perform(post("/exams")
-//                .content(asJsonString(exam1))
-//                .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(content().contentType("application/json"));
-//    }
+
+    @WithMockUser(value = "admin", roles = {"ADMIN"})
+    @DisplayName("create exam return status 201 with role admin")
+    @Test
+    public void create_whenCreateExamsWithRoleAdmin_thenReturnStatus201()
+            throws Exception {
+        given(examService.save(any(Exam.class))).willReturn(exam1);
+        mvc.perform(post("/exams")
+                .content(asJsonString(exam1))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType("application/json"));
+    }
 }
