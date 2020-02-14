@@ -216,4 +216,28 @@ public class ExamControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
+
+    @WithMockUser(value = "user", roles = {"USER"})
+    @DisplayName("delete exam return status 403 with role user")
+    @Test
+    public void delete_whenDeleteExamsWithRoleUser_thenReturnStatus403()
+            throws Exception {
+        given(examService.findById(1L)).willReturn(Optional.of(exam1));
+        Mockito.doNothing().when(examService).remove(any(Long.class));
+        mvc.perform(delete("/exams/{id}",1L)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
+
+    @WithMockUser(value = "tutor", roles = {"TUTOR"})
+    @DisplayName("delete exam return status 403 with role tutor")
+    @Test
+    public void delete_whenDeleteExamsWithRoleTutor_thenReturnStatus403()
+            throws Exception {
+        given(examService.findById(1L)).willReturn(Optional.of(exam1));
+        Mockito.doNothing().when(examService).remove(any(Long.class));
+        mvc.perform(delete("/exams/{id}",1L)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
+    }
 }
