@@ -118,4 +118,16 @@ public class ExamControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"));
     }
+
+    @WithMockUser(value = "user", roles = {"USER"})
+    @DisplayName("find by id return status 200 with role user")
+    @Test
+    public void findById_whenGetExamsWithRoleUser_thenReturnStatus200()
+            throws Exception {
+        given(examService.findById(1L)).willReturn(Optional.of(exam1));
+        mvc.perform(get("/exams/{id}",1L)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"));
+    }
 }
