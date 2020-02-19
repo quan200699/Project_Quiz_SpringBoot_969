@@ -30,4 +30,10 @@ public class QuizRepositoryTest {
     public void whenFindAll_thenReturnListNotNull() {
         assertThat(quizRepository.findAll()).isNotNull();
     }
+
+    @DisplayName("findAll can return a list has one element")
+    @Test
+    public void whenFindAll_thenReturnListHasOneElement() {
+        assertThat(quizRepository.findAll()).hasSize(1);
+    }
 }
