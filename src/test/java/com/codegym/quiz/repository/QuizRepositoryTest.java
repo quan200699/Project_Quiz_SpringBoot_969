@@ -42,4 +42,10 @@ public class QuizRepositoryTest {
     public void whenFindById_thenReturnQuiz() {
         assertThat(quizRepository.findById(1L)).isPresent();
     }
+
+    @DisplayName("findById can return a quiz has id = 0")
+    @Test
+    public void whenFindById_thenReturnQuizNull() {
+        assertThat(quizRepository.findById(0L)).isNotPresent();
+    }
 }
