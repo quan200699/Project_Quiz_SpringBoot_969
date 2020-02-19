@@ -17,4 +17,12 @@ public class Quiz implements Serializable {
     private String name;
 
     private int minutes;
+
+    public Quiz() {
+    }
+
+    public Quiz(String name, int minutes) {
+        this.name = name;
+        this.minutes = minutes;
+    }
 }
