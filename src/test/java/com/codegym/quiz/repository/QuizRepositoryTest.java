@@ -36,4 +36,10 @@ public class QuizRepositoryTest {
     public void whenFindAll_thenReturnListHasOneElement() {
         assertThat(quizRepository.findAll()).hasSize(1);
     }
+
+    @DisplayName("findById can return a quiz has id = 1")
+    @Test
+    public void whenFindById_thenReturnQuiz() {
+        assertThat(quizRepository.findById(1L)).isPresent();
+    }
 }
