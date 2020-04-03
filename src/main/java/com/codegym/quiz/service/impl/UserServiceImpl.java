@@ -86,9 +86,4 @@ public class UserServiceImpl implements UserService {
         }
         return isCorrectConfirmPassword;
     }
-
-    @Override
-    public Iterable<User> findAllByStudentClass(StudentClass studentClass) {
-        return userRepository.findAllByStudentClass(studentClass);
-    }
 }

@@ -21,6 +21,4 @@ public interface UserService extends UserDetailsService {
     User findByEmail(String email);
 
     boolean isCorrectConfirmPassword(User user);
-
-    Iterable<User> findAllByStudentClass(StudentClass studentClass);
 }
